@@ -37,53 +37,11 @@ session_start();
                                 <p class="text-primary fw-bold">Students Info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
-                                <button id="add-btn" type="button" class="btn btn-primary" onclick=" $('#exampleModal').modal('toggle');" >Add</button>
+                                <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
                                 <button id="edit-btn" class="btn btn-primary" type="button" >Edit</button>
                                 <button id="delete-btn" class="btn btn-primary" type="button">Delete</button>
                             </div>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                                      <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <form id="addStudentForm" method="POST" action="add.php">
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="studentFirstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
-                                            </div>
-                                            <div class="mb-3">  
-                                                <label for="studentLastName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="studentAge" class="form-label">Age</label>
-                                                <input type="date" class="form-control" id="studentAge" name="studentAge" value="" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="studentNum" class="form-label">Num</label>
-                                                <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="studentMatricule" class="form-label">Matricule</label>
-                                                <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="studentEmail" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                                        </div>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
+                            
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -131,7 +89,7 @@ session_start();
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td class="col" ><input class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td class="col" ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
                                             <td><strong>First Name</strong></td>
                                             <td><strong>Last Name</strong></td>
                                             <td><strong>Age</strong></td>
@@ -170,45 +128,184 @@ session_start();
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     
+<div id="popup" >
+    <div id="popup-add">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form id="addStudentForm" method="POST" action="add.php">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="studentFirstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
+                                                </div>
+                                                <div class="mb-3">  
+                                                    <label for="studentLastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentAge" class="form-label">Age</label>
+                                                    <input type="date" class="form-control" id="studentAge" name="studentAge" value="" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentNum" class="form-label">Num</label>
+                                                    <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentMatricule" class="form-label">Matricule</label>
+                                                    <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="studentEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    </div>
+        </div>
+    </div>
+    <div id="popup-edit">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
+                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form id="addStudentForm" method="POST" action="edit.php">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="studentFirstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
+                                                </div>
+                                                <div class="mb-3">  
+                                                    <label for="studentLastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentAge" class="form-label">Age</label>
+                                                    <input type="date" class="form-control" id="studentAge" name="studentAge" value="" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentNum" class="form-label">Num</label>
+                                                    <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="studentMatricule" class="form-label">Matricule</label>
+                                                    <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="studentEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    </div>
+        </div>
+    </div>
+</div>
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-    // Handle checkbox change event
-    document.querySelectorAll('.row-checkbox').forEach((checkbox) => {
-        checkbox.addEventListener('change', (event) => {
-            if(event.target.checked) {
-                // Checkbox is checked..
-                var rowId = event.target.getAttribute('data-id');
-                // Now you have the id of the row (assuming your table has a column 'id')
-                // You can use this id to select the row in your database
+    document.getElementById('check-all').addEventListener('change', function() {
+    var checkboxes = document.querySelectorAll('.form-check-input');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = this.checked;
+    }
+});
+
+    $('#delete-btn').click(function() {
+        // get all checked checkboxes
+        var checkboxes = $('input[type="checkbox"]:checked');
+
+        if(checkboxes.length > 0) { // if there is at least one checkbox checked
+            // show a confirmation dialog
+            if(confirm('Are you sure you want to delete ' + checkboxes.length + ' row(s)?')) {
+                // if the user confirms, delete the rows
+                checkboxes.each(function() {
+                    var row = $(this).closest('tr');
+                    var id = row.find('td:eq(0)').text(); // assuming the ID is in the first cell
+                    console.log()
+                    // delete the row from the database
+                    // this will require a server-side script (like delete.php) that deletes a row based on its ID
+                    // you can use AJAX to send the ID to the script without reloading the page
+                    $.post('delete.php', {id: id}, function(response) {
+                        // this callback function is executed when the server responds
+
+                        // check if the delete was successful
+                        if(response.success) {
+                            // remove the row from the table
+                            row.remove();
+                        } else {
+                            // show an error message
+                            alert('Failed to delete row with ID ' + id);
+                        }
+                    }, 'json'); // expect a JSON response from the server
+                });
             }
-        });
-    });
-
-    // Handle edit button click event
-    document.getElementById('edit-btn').addEventListener('click', (event) => {
-        var checkedCheckboxes = document.querySelectorAll('.row-checkbox:checked');
-        if(checkedCheckboxes.length > 0) {
-            // At least one checkbox is checked
-            var rowId = checkedCheckboxes[0].getAttribute('data-id');
-            // Now you have the id of the first selected row
-            // You can use this id to get the row data and fill the form
-
-            // For example, if you have an input field with id 'studentFirstName' in your form:
-            var firstName = document.querySelector('tr[data-id="' + rowId + '"] td:nth-child(3)').innerText;
-            document.getElementById('studentFirstName').value = firstName;
-            // and so on for the other fields...
-
         } else {
-            // No checkbox is checked
             alert('No row selected');
         }
     });
-});
+    $('#add-btn').click(function() {
+        $('#studentFirstName').val('');
+        $('#studentLastName').val('');
+        $('#studentAge').val('');
+        $('#studentNum').val('');
+        $('#studentMatricule').val('');
+        $('#studentEmail').val('');
+        $('#exampleModal').modal('show');
+    });
+    
+    $('#edit-btn').click(function() {
+        var checkbox = $('input[type="checkbox"]:checked');
+        if(checkbox.length === 1  ) { 
+            var row = checkbox.closest('tr');
+            var firstName = row.find('td:eq(1)').text();
+            var lastName = row.find('td:eq(2)').text(); 
+            var age = row.find('td:eq(3)').text();
+            var num = row.find('td:eq(4)').text();
+            var mat = row.find('td:eq(5)').text();
+            var email = row.find('td:eq(6)').text();
+
+            $('#studentFirstName').val(firstName);
+            $('#studentLastName').val(lastName);
+            $('#studentAge').val(age);
+            $('#studentNum').val(num);
+            $('#studentMatricule').val(mat);
+            $('#studentEmail').val(email);
+            $('#exampleModal').modal('show');
+        }
+        else if(checkbox.length > 1){
+        alert('select just one row');
+        }
+        else {
+        alert('No row selected');
+        }
+    });
 </script>
+
 
 </html>
