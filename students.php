@@ -129,8 +129,8 @@ session_start();
     </div>
     
 <div id="popup" >
-    <div id="popup-add">
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="popupadd">
+        <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -174,8 +174,8 @@ session_start();
                                     </div>
         </div>
     </div>
-    <div id="popup-edit">
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="popupedit">
+        <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -185,29 +185,29 @@ session_start();
                                         <form id="addStudentForm" method="POST" action="edit.php">
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="studentFirstName" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
+                                                    <label for="studentFirstNameedit" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
                                                 </div>
                                                 <div class="mb-3">  
-                                                    <label for="studentLastName" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" required>
+                                                    <label for="studentLastNameedit" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="studentAge" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="studentAge" name="studentAge" value="" required>
+                                                    <label for="studentAgeedit" class="form-label">Age</label>
+                                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="studentNum" class="form-label">Num</label>
-                                                    <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
+                                                    <label for="studentNumedit" class="form-label">Num</label>
+                                                    <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="studentMatricule" class="form-label">Matricule</label>
-                                                    <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
+                                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
+                                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" required>
                                                 </div>
                                                 
                                                 <div class="mb-3">
-                                                    <label for="studentEmail" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>
+                                                    <label for="studentEmailedit" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -276,7 +276,7 @@ session_start();
         $('#studentNum').val('');
         $('#studentMatricule').val('');
         $('#studentEmail').val('');
-        $('#exampleModal').modal('show');
+        $('#popup-add').modal('show');
     });
     
     $('#edit-btn').click(function() {
@@ -289,14 +289,14 @@ session_start();
             var num = row.find('td:eq(4)').text();
             var mat = row.find('td:eq(5)').text();
             var email = row.find('td:eq(6)').text();
-
-            $('#studentFirstName').val(firstName);
-            $('#studentLastName').val(lastName);
-            $('#studentAge').val(age);
-            $('#studentNum').val(num);
-            $('#studentMatricule').val(mat);
-            $('#studentEmail').val(email);
-            $('#exampleModal').modal('show');
+            $('#popup-edit').modal('show');
+            $('#studentFirstNameedit').val(firstName);
+            $('#studentLastNameedit').val(lastName);
+            $('#studentAgeedit').val(age);
+            $('#studentNumedit').val(num);
+            $('#studentMatriculeedit').val(mat);
+            $('#studentEmailedit').val(email);
+            
         }
         else if(checkbox.length > 1){
         alert('select just one row');
