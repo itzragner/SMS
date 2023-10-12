@@ -65,7 +65,7 @@ session_start();
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th style="width: 9.3%;" ></th>
+                                            <th style="width: 10%;" ></th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Age</th>
@@ -194,11 +194,11 @@ session_start();
                                                 </div>
                                                 <div class="mb-3">  
                                                     <label for="studentLastNameedit" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" required>
+                                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="studentAgeedit" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" required>
+                                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="studentNumedit" class="form-label">Num</label>
@@ -211,7 +211,7 @@ session_start();
                                                 
                                                 <div class="mb-3">
                                                     <label for="studentEmailedit" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" required>
+                                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" >
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -233,6 +233,17 @@ session_start();
 
 
 <script>
+    //search
+$(document).ready(function(){
+  $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("table tbody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+//ccheckalll
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');
     for (var i = 0; i < checkboxes.length; i++) {
@@ -240,7 +251,7 @@ session_start();
     }
 });
 
-    
+    //addd
     $('#add-btn').click(function() {
         $('#studentFirstName').val('');
         $('#studentLastName').val('');
@@ -250,7 +261,7 @@ session_start();
         $('#studentEmail').val('');
         $('#popup-add').modal('show');
     });
-    
+    //edit
     $('#edit-btn').click(function() {
         var checkbox = $('input[type="checkbox"]:checked');
         if(checkbox.length === 1  ) { 
@@ -277,6 +288,8 @@ session_start();
         alert('No row selected');
         }
     });
+
+    //delete
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
         if(checkboxes.length > 0) { 
