@@ -5,15 +5,14 @@ $result = $conn->query($sql);
 session_start();
 
 ?>
-
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Table - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script src="assets/js/jquery.min.js"></script>
@@ -26,7 +25,7 @@ session_start();
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
             <?php include 'header.php'; ?>
-                <div class="container-fluid">
+            <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-2">
                     <h3 class="text-dark mb-4 fw-bold">Students</h3>
                     <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
@@ -46,7 +45,7 @@ session_start();
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
+                                    <div id="dataTable_length" class="dataTables_length" ><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
                                                 <option value="10" selected="">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
@@ -56,12 +55,12 @@ session_start();
                                 <div class="col-md-6">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                         <label class="form-label">
-                                            <input type="search" id="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search">
+                                            <input type="search" id="search" class="form-control form-control-sm"  placeholder="Search">
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" >
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
@@ -93,7 +92,7 @@ session_start();
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td class="col" ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox"  <?php if ($result->num_rows === 0){ echo' disabled';} ?>/> Check All</td>
                                             <td><strong>First Name</strong></td>
                                             <td><strong>Last Name</strong></td>
                                             <td><strong>Age</strong></td>
@@ -170,8 +169,11 @@ session_start();
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                                <div id="message" class=" alert" ></div>
+                                                <div class= >
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -233,6 +235,28 @@ session_start();
 
 
 <script>
+    //unique 
+    $(document).ready(function() {
+    $('#addStudentForm').on('submit', function(matunique) {
+        matunique.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.indexOf("The")===0){
+                    $('#message').html(response);
+                }else{
+                    location.reload();
+                }
+                
+            }
+        });
+    });
+});
+
+
     //search
 $(document).ready(function(){
   $("#search").on("keyup", function() {
@@ -259,6 +283,7 @@ $(document).ready(function(){
         $('#studentNum').val('');
         $('#studentMatricule').val('');
         $('#studentEmail').val('');
+        $('#message').html('');
         $('#popup-add').modal('show');
     });
     //edit
@@ -293,7 +318,7 @@ $(document).ready(function(){
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
         if(checkboxes.length > 0) { 
-            if(confirm('Are you sure you want to delete ' + checkboxes.length + ' row(s)?')) {
+            if(confirm('Are you sure you want to delete ')) {
                 checkboxes.each(function() {
                     var row = $(this).closest('tr');
                     var mat = row.find('td:eq(5)').text(); 
