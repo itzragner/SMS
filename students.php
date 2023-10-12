@@ -236,33 +236,7 @@ session_start();
     }
 });
 
-    $('#delete-btn').click(function() {
-        var checkboxes = $('input[type="checkbox"]:checked');
-        if(checkboxes.length > 0) { 
-            if(confirm('Are you sure you want to delete ' + checkboxes.length + ' row(s)?')) {
-                checkboxes.each(function() {
-                    var row = $(this).closest('tr');
-                    var mat = row.find('td:eq(5)').text(); 
-                    console.log(mat);
-                    $.ajax({
-                    url: 'delete.php',
-                    type: 'POST',
-                    data: { mat: mat },
-                    success :function(response){
-                        location.reload();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Handle any errors
-                        console.log(textStatus, errorThrown);
-                    },
-                });
-
-                });
-            }
-        } else {
-            alert('No row selected');
-        }
-    });
+    
     $('#add-btn').click(function() {
         $('#studentFirstName').val('');
         $('#studentLastName').val('');
@@ -297,6 +271,33 @@ session_start();
         }
         else {
         alert('No row selected');
+        }
+    });
+    $('#delete-btn').click(function() {
+        var checkboxes = $('input[type="checkbox"]:checked');
+        if(checkboxes.length > 0) { 
+            if(confirm('Are you sure you want to delete ' + checkboxes.length + ' row(s)?')) {
+                checkboxes.each(function() {
+                    var row = $(this).closest('tr');
+                    var mat = row.find('td:eq(5)').text(); 
+                    console.log(mat);
+                    $.ajax({
+                    url: 'delete.php',
+                    type: 'POST',
+                    data: { mat: mat },
+                    success :function(response){
+                        location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle any errors
+                        console.log(textStatus, errorThrown);
+                    },
+                });
+
+                });
+            }
+        } else {
+            alert('No row selected');
         }
     });
 </script>
