@@ -1,9 +1,13 @@
-<nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
+
+    <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
                             <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
                         </form>
                         <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item "  >
+                                <a class="nav-link" id="darkbtn" href="#"><i class="fas fa-moon" id="moon"></i> <i id="sun" class="fas fa-sun" hidden></i></a>
+                            </li>
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
                                     <form class="me-auto navbar-search w-100">
@@ -92,3 +96,18 @@
                         </ul>
                     </div>
                 </nav>
+        
+                <script>
+    document.getElementById('darkbtn').addEventListener('click',()=>{
+    if (document.body.classList.contains('dark')) {
+        document.body.classList.remove('dark');
+        document.getElementById('moon').hidden=false;
+        document.getElementById('sun').hidden=true;
+    }
+    else {
+        document.body.classList.add('dark');
+        document.getElementById('moon').hidden=true;
+        document.getElementById('sun').hidden=false;
+    }
+})
+</script>

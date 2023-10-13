@@ -1,7 +1,4 @@
-<?php
-session_start();
-$_SESSION['current_page']='index';
- ?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 

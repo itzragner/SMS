@@ -16,7 +16,25 @@ session_start();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script src="assets/js/jquery.min.js"></script>
+    <style >
+        :root {
+    --light-bg: #ffffff;
+    --light-text: #000000;
+}
+
+.dark {
+    --light-bg: #000000;
+    --light-text: #ffffff;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+    </style>
+    
 </head>
+
 
 <body id="page-top">
     
