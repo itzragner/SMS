@@ -98,16 +98,17 @@
                 </nav>
         
                 <script>
-    document.getElementById('darkbtn').addEventListener('click',()=>{
-    if (document.body.classList.contains('dark')) {
-        document.body.classList.remove('dark');
-        document.getElementById('moon').hidden=false;
-        document.getElementById('sun').hidden=true;
-    }
-    else {
-        document.body.classList.add('dark');
-        document.getElementById('moon').hidden=true;
-        document.getElementById('sun').hidden=false;
-    }
-})
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('darkbtn').addEventListener('click', function() {
+        if (document.body.classList.contains('dark')) {
+            document.body.classList.remove('dark');
+            document.getElementById('moon').hidden = false;
+            document.getElementById('sun').hidden = true;
+        } else {
+            document.body.classList.add('dark');
+            document.getElementById('moon').hidden = true;
+            document.getElementById('sun').hidden = false;
+        }
+    });
+});
 </script>

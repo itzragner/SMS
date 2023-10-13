@@ -2,7 +2,7 @@
  include 'config.php';
 $sql = "SELECT * FROM students";
 $result = $conn->query($sql);
-session_start();
+
 
 ?>
 <!DOCTYPE html>
@@ -158,7 +158,7 @@ body {
                                         <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
                                         <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <form id="addStudentForm" method="POST" action="add.php">
+                                        <form id="addStudentForm" method="POST" action="addstudent.php">
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="studentFirstName" class="form-label">First Name</label>
@@ -206,7 +206,7 @@ body {
                                         <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                                         <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <form id="addStudentForm" method="POST" action="edit.php">
+                                        <form id="addStudentForm" method="POST" action="editstudent.php">
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label for="studentFirstNameedit" class="form-label">First Name</label>
@@ -342,7 +342,7 @@ $(document).ready(function(){
                     var mat = row.find('td:eq(5)').text(); 
                     console.log(mat);
                     $.ajax({
-                    url: 'delete.php',
+                    url: 'deletestudent.php',
                     type: 'POST',
                     data: { mat: mat },
                     success :function(response){
