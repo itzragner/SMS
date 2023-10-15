@@ -15,6 +15,7 @@ if (mysqli_num_rows($check_result) > 0) {
   exit;
 }
 $sql = "INSERT INTO students ( firstname, lastname, email, num, matricule, age ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age')";
+//createAccount($email, $firstname, $mat, 'student');
 if($conn->query($sql)===TRUE){
   header('Location: students.php');
   die();

@@ -34,10 +34,7 @@ body {
     </style>
     
 </head>
-
-
 <body id="page-top">
-    
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -149,102 +146,101 @@ body {
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     
-<div id="popup" >
-    <div id="popupadd">
-        <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <form id="addStudentForm" method="POST" action="addstudent.php">
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="studentFirstName" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
-                                                </div>
-                                                <div class="mb-3">  
-                                                    <label for="studentLastName" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentAge" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="studentAge" name="studentAge" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentNum" class="form-label">Num</label>
-                                                    <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentMatricule" class="form-label">Matricule</label>
-                                                    <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="studentEmail" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" >
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div id="message" class=" alert" ></div>
-                                                <div class= >
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    </div>
-        </div>
+    <div id="popup" >
+        <div id="popupadd">
+            <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="addStudentForm" method="POST" action="addstudent.php">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="studentFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="studentFirstName" name="studentFirstName" value="" required>
+                            </div>
+                            <div class="mb-3">  
+                                <label for="studentLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="studentLastName" name="studentLastName" value="" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="studentAge" class="form-label">Age</label>
+                                <input type="date" class="form-control" id="studentAge" name="studentAge" value="" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="studentNum" class="form-label">Num</label>
+                                <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="studentMatricule" class="form-label">Matricule</label>
+                                <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="studentEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="message" class=" alert" ></div>
+                            <div class= >
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+    </div>
     </div>
     <div id="popupedit">
-        <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
-                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <form id="addStudentForm" method="POST" action="editstudent.php">
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="studentFirstNameedit" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
-                                                </div>
-                                                <div class="mb-3">  
-                                                    <label for="studentLastNameedit" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentAgeedit" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentNumedit" class="form-label">Num</label>
-                                                    <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
-                                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" required>
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="studentEmailedit" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" >
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    </div>
+    <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form id="addStudentForm" method="POST" action="editstudent.php">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="studentFirstNameedit" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
+                                </div>
+                                <div class="mb-3">  
+                                    <label for="studentLastNameedit" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentAgeedit" class="form-label">Age</label>
+                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentNumedit" class="form-label">Num</label>
+                                    <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
+                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="studentEmailedit" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" >
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
@@ -273,8 +269,6 @@ body {
         });
     });
 });
-
-
     //search
 $(document).ready(function(){
   $("#search").on("keyup", function() {
@@ -284,7 +278,6 @@ $(document).ready(function(){
     });
   });
 });
-
 //ccheckalll
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');
@@ -292,7 +285,6 @@ $(document).ready(function(){
         checkboxes[i].checked = this.checked;
     }
 });
-
     //addd
     $('#add-btn').click(function() {
         $('#studentFirstName').val('');
@@ -331,7 +323,6 @@ $(document).ready(function(){
         alert('No row selected');
         }
     });
-
     //delete
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
@@ -361,6 +352,4 @@ $(document).ready(function(){
         }
     });
 </script>
-
-
 </html>
