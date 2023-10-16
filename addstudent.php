@@ -6,20 +6,29 @@ $email=$_POST["studentEmail"];
 $age=$_POST["studentAge"];
 $num=$_POST["studentNum"];
 $mat=$_POST["studentMatricule"];
-$check_sql = "SELECT * FROM students WHERE matricule = '$mat'";
-$check_result = mysqli_query($conn, $check_sql);
+$check_sql1 = "SELECT * FROM students WHERE matricule = '$mat' ";
+$check_sql2 = "SELECT * FROM students WHERE email = '$email' ";
+$check_result1 = mysqli_query($conn, $check_sql1);
+$check_result2 = mysqli_query($conn, $check_sql2);
 
-if (mysqli_num_rows($check_result) > 0) {
-  // If the matricule already exists, echo a message and stop the script
+if (mysqli_num_rows($check_result1) > 0) {
   echo "The matricule already exists. try another one.";
   exit;
 }
-$sql = "INSERT INTO students ( firstname, lastname, email, num, matricule, age ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age')";
+if(mysqli_num_rows($check_result2)>0){
+  echo "The email already exists. try another one.";
+  exit;
+}
+$sql1 = "INSERT INTO students ( firstname, lastname, email, num, matricule, age ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age')";
+$password = $firstname . $mat;
+$password = password_hash($password, PASSWORD_DEFAULT);
+$sql2 = "INSERT INTO accounts ( email , password, role ) VALUES ('$email', '$password','student')";
+
 //createAccount($email, $firstname, $mat, 'student');
-if($conn->query($sql)===TRUE){
+if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE  )){
   header('Location: students.php');
   die();
 } else{
-  echo "Error: " . $sql . "<br>" . $conn->error;
+  echo "Error: " . $sql1 . "<br>" . $conn->error;echo "Error: " . $sql2 . "<br>" . $conn->error;
 }
 ?>

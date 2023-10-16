@@ -2,8 +2,6 @@
  include 'config.php';
 $sql = "SELECT * FROM students";
 $result = $conn->query($sql);
-
-
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
@@ -14,25 +12,37 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script src="assets/js/jquery.min.js"></script>
-    <style >
-        :root {
-    --light-bg: #ffffff;
-    --light-text: #000000;
-}
-
-.dark {
-    --light-bg: #000000;
-    --light-text: #ffffff;
-}
-
-body {
-    background-color: var(--light-bg);
-    color: var(--light-text);
-}
-    </style>
-    
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+<script>
+    $(document).ready(function() {
+        $('#tablestudent').DataTable({
+        columnDefs: [
+            {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
+        ],
+        order: [[ 1,'asc']],
+        language: {
+            search:"",
+            searchPlaceholder: "Search",
+            paginate: {
+            previous: '<span class="fa fa-chevron-left"></span>',   
+            next: '<span class="fa fa-chevron-right"></span>'
+            },
+            lengthMenu: 'Show <select class="form-control input-sm">'+
+            '<option value="10">10</option>'+
+            '<option value="20">20</option>'+
+            '<option value="30">30</option>'+
+            '<option value="40">40</option>'+
+            '<option value="50">50</option>'+
+            '<option value="-1">All</option>'
+        }
+    })  
+    } );
+</script>   
 </head>
 <body id="page-top">
     <div id="wrapper" >
@@ -58,25 +68,8 @@ body {
                             
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" ><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" id="search" class="form-control form-control-sm"  placeholder="Search">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0 table-striped" id="tablestudent">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;" ></th>
@@ -117,22 +110,6 @@ body {
                                         </tr>
                                     </tfoot>
                                 </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +180,7 @@ body {
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="addStudentForm" method="POST" action="editstudent.php">
+                        <form id="editStudentForm" method="POST" action="editstudent.php">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="studentFirstNameedit" class="form-label">First Name</label>
@@ -223,12 +200,12 @@ body {
                                 </div>
                                 <div class="mb-3">
                                     <label for="studentMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" required>
+                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" disabled>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="studentEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" >
+                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" disabled>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -249,11 +226,10 @@ body {
 
 
 <script>
-    //unique 
+
     $(document).ready(function() {
     $('#addStudentForm').on('submit', function(matunique) {
         matunique.preventDefault();
-
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
@@ -269,23 +245,16 @@ body {
         });
     });
 });
-    //search
-$(document).ready(function(){
-  $("#search").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("table tbody tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-//ccheckalll
+
+
+
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = this.checked;
     }
 });
-    //addd
+ 
     $('#add-btn').click(function() {
         $('#studentFirstName').val('');
         $('#studentLastName').val('');
@@ -296,7 +265,7 @@ $(document).ready(function(){
         $('#message').html('');
         $('#popup-add').modal('show');
     });
-    //edit
+
     $('#edit-btn').click(function() {
         var checkbox = $('input[type="checkbox"]:checked');
         if(checkbox.length === 1  ) { 
@@ -323,26 +292,22 @@ $(document).ready(function(){
         alert('No row selected');
         }
     });
-    //delete
+
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
         if(checkboxes.length > 0) { 
             if(confirm('Are you sure you want to delete ')) {
                 checkboxes.each(function() {
                     var row = $(this).closest('tr');
-                    var mat = row.find('td:eq(5)').text(); 
-                    console.log(mat);
+                    var mat = row.find('td:eq(5)').text();
+                    var email= row.find('td:eq(6)').text(); 
                     $.ajax({
                     url: 'deletestudent.php',
                     type: 'POST',
-                    data: { mat: mat },
+                    data: { mat: mat, email:email  },
                     success :function(response){
                         location.reload();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Handle any errors
-                        console.log(textStatus, errorThrown);
-                    },
+                    }
                 });
 
                 });

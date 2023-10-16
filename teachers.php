@@ -2,7 +2,6 @@
  include 'config.php';
 $sql = "SELECT * FROM teachers";
 $result = $conn->query($sql);
-
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
@@ -13,30 +12,39 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script src="assets/js/jquery.min.js"></script>
-    <style >
-        :root {
-    --light-bg: #ffffff;
-    --light-text: #000000;
-}
-
-.dark {
-    --light-bg: #000000;
-    --light-text: #ffffff;
-}
-
-body {
-    background-color: var(--light-bg);
-    color: var(--light-text);
-}
-    </style>
-    
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+<script>
+    $(document).ready(function() {
+        $('#tableteacher').DataTable({
+        columnDefs: [
+            {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
+        ],
+        order: [[ 1,'asc']],
+        language: {
+            search:"",
+            searchPlaceholder: "Search",
+            paginate: {
+            previous: '<span class="fa fa-chevron-left"></span>',   
+            next: '<span class="fa fa-chevron-right"></span>'
+            },
+            lengthMenu: 'Show <select class="form-control input-sm">'+
+            '<option value="10">10</option>'+
+            '<option value="20">20</option>'+
+            '<option value="30">30</option>'+
+            '<option value="40">40</option>'+
+            '<option value="50">50</option>'+
+            '<option value="-1">All</option>'
+        }
+    })  
+    } );
+</script>   
 </head>
-
-
 <body id="page-top">
-    
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -44,13 +52,13 @@ body {
             <?php include 'header.php'; ?>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-2">
-                    <h3 class="text-dark mb-4 fw-bold">Teachers</h3>
+                    <h3 class="text-dark mb-4 fw-bold">teachers</h3>
                     <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
                 </div>
                     <div class="card shadow">
                         <div class="card-header py-3 flex-row justify-content-between align-items-center">
                             <div class="col-auto float-start pt-2">
-                                <p class="text-primary fw-bold">Teachers Info</p>
+                                <p class="text-primary fw-bold">teachers Info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
                                 <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
@@ -60,25 +68,8 @@ body {
                             
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" ><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
-                                        <label class="form-label">
-                                            <input type="search" id="search" class="form-control form-control-sm"  placeholder="Search">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0 table-striped" id="tableteacher">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;" ></th>
@@ -120,22 +111,6 @@ body {
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite"></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,102 +123,101 @@ body {
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     
-<div id="popup" >
-    <div id="popupadd">
-        <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <form id="addteacherForm" method="POST" action="addteacher.php">
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="teacherFirstName" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
-                                                </div>
-                                                <div class="mb-3">  
-                                                    <label for="teacherLastName" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherAge" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherNum" class="form-label">Num</label>
-                                                    <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherMatricule" class="form-label">Matricule</label>
-                                                    <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="teacherEmail" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" >
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div id="message" class=" alert" ></div>
-                                                <div class= >
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    </div>
-        </div>
+    <div id="popup" >
+        <div id="popupadd">
+            <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="addteacherForm" method="POST" action="addteacher.php">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="teacherFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
+                            </div>
+                            <div class="mb-3">  
+                                <label for="teacherLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherAge" class="form-label">Age</label>
+                                <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherNum" class="form-label">Num</label>
+                                <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="teacherMatricule" class="form-label">Matricule</label>
+                                <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="teacherEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" >
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="message" class=" alert" ></div>
+                            <div class= >
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+    </div>
     </div>
     <div id="popupedit">
-        <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
-                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <form id="addteacherForm" method="POST" action="editteacher.php">
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="teacherFirstNameedit" class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" id="teacherFirstNameedit" name="teacherFirstNameedit" value="" required>
-                                                </div>
-                                                <div class="mb-3">  
-                                                    <label for="teacherLastNameedit" class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" id="teacherLastNameedit" name="teacherLastNameedit" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherAgeedit" class="form-label">Age</label>
-                                                    <input type="date" class="form-control" id="teacherAgeedit" name="teacherAgeedit" value="" >
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherNumedit" class="form-label">Num</label>
-                                                    <input type="number" class="form-control" id="teacherNumedit" name="teacherNumedit" value="">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="teacherMatriculeedit" class="form-label">Matricule</label>
-                                                    <input type="text" class="form-control" id="teacherMatriculeedit" name="teacherMatriculeedit" value="" required>
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="teacherEmailedit" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="teacherEmailedit" name="teacherEmailedit" value="" >
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    </div>
+    <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form id="editteacherForm" method="POST" action="editteacher.php">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="teacherFirstNameedit" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="teacherFirstNameedit" name="teacherFirstNameedit" value="" required>
+                                </div>
+                                <div class="mb-3">  
+                                    <label for="teacherLastNameedit" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="teacherLastNameedit" name="teacherLastNameedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherAgeedit" class="form-label">Age</label>
+                                    <input type="date" class="form-control" id="teacherAgeedit" name="teacherAgeedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherNumedit" class="form-label">Num</label>
+                                    <input type="number" class="form-control" id="teacherNumedit" name="teacherNumedit" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherMatriculeedit" class="form-label">Matricule</label>
+                                    <input type="text" class="form-control" id="teacherMatriculeedit" name="teacherMatriculeedit" value="" disabled>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="teacherEmailedit" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="teacherEmailedit" name="teacherEmailedit" value="" disabled>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
@@ -252,11 +226,10 @@ body {
 
 
 <script>
-    //unique 
+
     $(document).ready(function() {
     $('#addteacherForm').on('submit', function(matunique) {
         matunique.preventDefault();
-
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
@@ -271,28 +244,15 @@ body {
             }
         });
     });
-});
+}); 
 
-
-    //search
-$(document).ready(function(){
-  $("#search").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("table tbody tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-
-//ccheckalll
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');
     for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = this.checked;
     }
 });
-
-    //addd
+ 
     $('#add-btn').click(function() {
         $('#teacherFirstName').val('');
         $('#teacherLastName').val('');
@@ -303,7 +263,7 @@ $(document).ready(function(){
         $('#message').html('');
         $('#popup-add').modal('show');
     });
-    //edit
+
     $('#edit-btn').click(function() {
         var checkbox = $('input[type="checkbox"]:checked');
         if(checkbox.length === 1  ) { 
@@ -331,26 +291,21 @@ $(document).ready(function(){
         }
     });
 
-    //delete
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
         if(checkboxes.length > 0) { 
             if(confirm('Are you sure you want to delete ')) {
                 checkboxes.each(function() {
                     var row = $(this).closest('tr');
-                    var mat = row.find('td:eq(5)').text(); 
-                    console.log(mat);
+                    var mat = row.find('td:eq(5)').text();
+                    var email= row.find('td:eq(6)').text(); 
                     $.ajax({
                     url: 'deleteteacher.php',
                     type: 'POST',
-                    data: { mat: mat },
+                    data: { mat: mat, email:email  },
                     success :function(response){
                         location.reload();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Handle any errors
-                        console.log(textStatus, errorThrown);
-                    },
+                    }
                 });
 
                 });
@@ -360,6 +315,4 @@ $(document).ready(function(){
         }
     });
 </script>
-
-
 </html>
