@@ -127,96 +127,96 @@ $result = $conn->query($sql);
         <div id="popupadd">
             <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <form id="addteacherForm" method="POST" action="addteacher.php">
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="teacherFirstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
-                            </div>
-                            <div class="mb-3">  
-                                <label for="teacherLastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
-                            </div>
-                            <div class="mb-3">
-                                <label for="teacherAge" class="form-label">Age</label>
-                                <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
-                            </div>
-                            <div class="mb-3">
-                                <label for="teacherNum" class="form-label">Num</label>
-                                <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
-                            </div>
-                            <div class="mb-3">
-                                <label for="teacherMatricule" class="form-label">Matricule</label>
-                                <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="teacherEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" >
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div id="message" class=" alert" ></div>
-                            <div>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                </div>
-    </div>
-    </div>
-    <div id="popupedit">
-        <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="editteacherForm" method="POST" action="editteacher.php">
+                        <form id="addteacherForm" method="POST" action="addteacher.php">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="studentFirstNameedit" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
+                                    <label for="teacherFirstName" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
                                 </div>
                                 <div class="mb-3">  
-                                    <label for="studentLastNameedit" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
+                                    <label for="teacherLastName" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="studentAgeedit" class="form-label">Age</label>
-                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
+                                    <label for="teacherAge" class="form-label">Age</label>
+                                    <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="studentNumedit" class="form-label">Num</label>
-                                    <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
+                                    <label for="teacherNum" class="form-label">Num</label>
+                                    <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" disabled>
+                                    <label for="teacherMatricule" class="form-label">Matricule</label>
+                                    <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="studentEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" disabled>
+                                    <label for="teacherEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" >
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                <div id="message" class=" alert" ></div>
+                                <div>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
+        <div id="popupedit">
+            <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
+                                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="editteacherForm" method="POST" action="editteacher.php">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="studentFirstNameedit" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
+                                    </div>
+                                    <div class="mb-3">  
+                                        <label for="studentLastNameedit" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="studentAgeedit" class="form-label">Age</label>
+                                        <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="studentNumedit" class="form-label">Num</label>
+                                        <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="studentMatriculeedit" class="form-label">Matricule</label>
+                                        <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" disabled>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="studentEmailedit" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" disabled>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>

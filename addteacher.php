@@ -26,8 +26,8 @@ $sql2 = "INSERT INTO accounts ( email , password, role ) VALUES ('$email', '$pas
 
 //createAccount($email, $firstname, $mat, 'teacher');
 if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE  )){
-  header('Location: teachers.php');
-  die();
+  //header('Location: teachers.php');
+  //die();
 } else{
   echo "Error: " . $sql1 . "<br>" . $conn->error;echo "Error: " . $sql2 . "<br>" . $conn->error;
 }
