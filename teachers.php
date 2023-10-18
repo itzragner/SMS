@@ -162,7 +162,7 @@ $result = $conn->query($sql);
                         </div>
                         <div class="modal-footer">
                             <div id="message" class=" alert" ></div>
-                            <div class= >
+                            <div>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                             </div>
@@ -173,8 +173,8 @@ $result = $conn->query($sql);
     </div>
     </div>
     <div id="popupedit">
-    <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
@@ -183,29 +183,29 @@ $result = $conn->query($sql);
                         <form id="editteacherForm" method="POST" action="editteacher.php">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="teacherFirstNameedit" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="teacherFirstNameedit" name="teacherFirstNameedit" value="" required>
+                                    <label for="studentFirstNameedit" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="studentFirstNameedit" name="studentFirstNameedit" value="" required>
                                 </div>
                                 <div class="mb-3">  
-                                    <label for="teacherLastNameedit" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="teacherLastNameedit" name="teacherLastNameedit" value="" >
+                                    <label for="studentLastNameedit" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="studentLastNameedit" name="studentLastNameedit" value="" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="teacherAgeedit" class="form-label">Age</label>
-                                    <input type="date" class="form-control" id="teacherAgeedit" name="teacherAgeedit" value="" >
+                                    <label for="studentAgeedit" class="form-label">Age</label>
+                                    <input type="date" class="form-control" id="studentAgeedit" name="studentAgeedit" value="" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="teacherNumedit" class="form-label">Num</label>
-                                    <input type="number" class="form-control" id="teacherNumedit" name="teacherNumedit" value="">
+                                    <label for="studentNumedit" class="form-label">Num</label>
+                                    <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="teacherMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="teacherMatriculeedit" name="teacherMatriculeedit" value="" disabled>
+                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
+                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" disabled>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="teacherEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="teacherEmailedit" name="teacherEmailedit" value="" disabled>
+                                    <label for="studentEmailedit" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" disabled>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -216,7 +216,7 @@ $result = $conn->query($sql);
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
@@ -244,7 +244,9 @@ $result = $conn->query($sql);
             }
         });
     });
-}); 
+});
+
+
 
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');

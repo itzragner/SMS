@@ -162,7 +162,7 @@ $result = $conn->query($sql);
                         </div>
                         <div class="modal-footer">
                             <div id="message" class=" alert" ></div>
-                            <div class= >
+                            <div >
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                             </div>
