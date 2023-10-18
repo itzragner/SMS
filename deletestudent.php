@@ -6,8 +6,6 @@ if ((isset($_POST['mat']))&& (isset($_POST['email']))) {
     $sql1 = "DELETE FROM students WHERE matricule = '$mat'";
     $sql2 = "DELETE FROM accounts WHERE email = '$email'";
     
-
-
     if((mysqli_query($conn, $sql1))&&((mysqli_query($conn, $sql2)))) {
         echo "good";
     } else {
