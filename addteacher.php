@@ -23,8 +23,6 @@ $sql1 = "INSERT INTO teachers ( firstname, lastname, email, num, matricule, age 
 $password = $firstname . $mat;
 $password = password_hash($password, PASSWORD_DEFAULT);
 $sql2 = "INSERT INTO accounts ( email , password, role ) VALUES ('$email', '$password','teacher')";
-
-//createAccount($email, $firstname, $mat, 'teacher');
 if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE  )){
   header('Location: teachers.php');
   die();
