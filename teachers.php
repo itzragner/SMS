@@ -235,12 +235,11 @@ $result = $conn->query($sql);
             type: 'POST',
             data: $(this).serialize(),
             success: function(response) {
-                if(response.indexOf("The")===0){
+                if((response === "The matricule already exists.")||(response === "The email already exists.")) {
                     $('#message').html(response);
-                }else{
+                } else {
                     location.reload();
                 }
-                
             }
         });
     });

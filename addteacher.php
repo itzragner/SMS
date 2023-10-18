@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+var_dump($_POST);
 $firstname=$_POST["teacherFirstName"];
 $lastname=$_POST["teacherLastName"];   
 $email=$_POST["teacherEmail"];
@@ -8,8 +9,8 @@ $num=$_POST["teacherNum"];
 $mat=$_POST["teacherMatricule"];
 $check_sql1 = "SELECT * FROM teachers WHERE matricule = '$mat' ";
 $check_sql2 = "SELECT * FROM accounts WHERE email = '$email' ";
-$check_result1 = mysqli_query($conn, $check_sql1);
-$check_result2 = mysqli_query($conn, $check_sql2);
+$check_result1 = $conn->query($check_sql1);
+$check_result2 = $conn->query($check_sql2);
 
 if (mysqli_num_rows($check_result1) > 0) {
   echo "The matricule already exists. try another one.";
