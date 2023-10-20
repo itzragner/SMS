@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 16 oct. 2023 à 23:47
+-- Généré le : ven. 20 oct. 2023 à 23:01
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -39,11 +39,9 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `email`, `password`, `role`) VALUES
-(14, 'arafetkh455@gmail.com', '$2y$10$HeI7/gBpub.MDfRlrWRqp.12F8yUILAVQC2DWpAii3pxzk4HUSMri', 'student'),
-(15, 'efesf@s.gdr', '$2y$10$VlrjPIpE6fQxGXk1RRpqVOArjrelEZ7zYgEYWVu4o5sNJfkjjQUfu', 'student'),
-(16, 'dgwr@gffesf.gj', '$2y$10$NXukfu1S7Njy0DvtT8sAfeQeIrGOUPEEwBH5zSUz/cng0oMR.6ApG', 'student'),
-(17, 'dgwr@gfn', '$2y$10$WO.5l1W4zm4DjO3IVtlOvunX3b6QVlqYVgtM3FEEWTPHTv9jyKbPm', 'student'),
-(18, 'admin', 'admin123', 'superadmin');
+(18, 'admin', 'admin123', 'superadmin'),
+(30, 'arafetkh455@gmail.com', '$2y$10$pYucO0xFLMTdZBkBpWnRX.XIAcWkclKw9C7k/SyVRIZRJY5gLBh6W', 'student'),
+(31, 'arafetkh455@gmail.comh', '$2y$10$8wFNBT1jzpomzYXMuNzENe382CfKlpV6J8fzeKEE1AAfg2aj8mXbK', 'teacher');
 
 -- --------------------------------------------------------
 
@@ -66,10 +64,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`firstname`, `lastname`, `matricule`, `num`, `id`, `email`, `age`) VALUES
-('arafet', 'grdg', '2022maj017', 52875575, 110, 'arafetkh455@gmail.com', '2023-10-11'),
-('fsef', 'sefsef', 'fesfse', 0, 111, 'efesf@s.gdr', '0000-00-00'),
-('gs', 'f', '2022maj01h', 63, 112, 'dgwr@gffesf.gj', '2023-10-12'),
-('hbt', '', 'nyh', 0, 113, 'dgwr@gfn', '2023-10-11');
+('arafet', 'kh', '45', 54, 116, 'arafetkh455@gmail.com', '2023-10-07');
 
 -- --------------------------------------------------------
 
@@ -80,19 +75,18 @@ INSERT INTO `students` (`firstname`, `lastname`, `matricule`, `num`, `id`, `emai
 CREATE TABLE `teachers` (
   `firstname` text NOT NULL,
   `lastname` text NOT NULL,
-  `matricule` varchar(255) NOT NULL,
-  `id` int(11) NOT NULL,
   `email` text NOT NULL,
-  `age` date NOT NULL,
-  `num` int(11) NOT NULL
+  `num` int(11) NOT NULL,
+  `matricule` text NOT NULL,
+  `age` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `teachers`
 --
 
-INSERT INTO `teachers` (`firstname`, `lastname`, `matricule`, `id`, `email`, `age`, `num`) VALUES
-('fthth', '', 'hfthtfh3', 0, '', '0000-00-00', 0);
+INSERT INTO `teachers` (`firstname`, `lastname`, `email`, `num`, `matricule`, `age`) VALUES
+('arafet', 'g', 'arafetkh455@gmail.comh', 54, 'f', '2023-10-26');
 
 --
 -- Index pour les tables déchargées
@@ -111,12 +105,6 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -124,13 +112,13 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT pour la table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
