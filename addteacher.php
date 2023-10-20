@@ -7,7 +7,7 @@ $age=$_POST["teacherAge"];
 $num=$_POST["teacherNum"];
 $mat=$_POST["teacherMatricule"];
 $check_sql1 = "SELECT * FROM teachers WHERE matricule = '$mat' ";
-$check_sql2 = "SELECT * FROM teachers WHERE email = '$email' ";
+$check_sql2 = "SELECT * FROM accounts WHERE email = '$email' ";
 $check_result1 = mysqli_query($conn, $check_sql1);
 $check_result2 = mysqli_query($conn, $check_sql2);
 

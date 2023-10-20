@@ -1,3 +1,42 @@
+<?php
+session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include 'config.php';
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $sql = "SELECT * FROM accounts WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hashed_password = $row['password'];
+        $role = $row['role'];
+        if (($role == 'superadmin')&& ($password=='admin123')) {
+            $_SESSION['adminlogged']= true;
+            header('Location: dashboard_admin.php');
+        }
+        if (password_verify($password, $hashed_password)) {
+             if ($role == 'teacher') {
+                $_SESSION['teacherlogged']= true;
+                header('Location: dashboard_teacher.php');
+            } else {
+                $_SESSION['studentlogged']= true;
+                header('Location: dashboard_student.php');
+            }
+        } else {
+            $_SESSION['error'] = "Invalid  password";
+        }
+    } else {
+        $_SESSION['error'] = "Invalid email ";
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -25,14 +64,20 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
-                                    <form class="user">
-                                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
+                                    <form class="user" method="post" action="login.php" >
+                                        <div class="mb-3"><input class="form-control form-control-user" type="" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
                                         <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                             </div>
                                         </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Login</button>
+                                        <?php
+                                            if (isset($_SESSION['error'])) { 
+                                                echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+                                                unset($_SESSION['error']); 
+                                            }
+                                        ?>
                                         <hr><a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a>
                                         <hr>
                                     </form>

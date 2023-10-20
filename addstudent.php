@@ -24,7 +24,6 @@ $password = $firstname . $mat;
 $password = password_hash($password, PASSWORD_DEFAULT);
 $sql2 = "INSERT INTO accounts ( email , password, role ) VALUES ('$email', '$password','student')";
 
-//createAccount($email, $firstname, $mat, 'student');
 if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE  )){
   header('Location: students.php');
   die();
