@@ -1,4 +1,5 @@
 <?php
+session_start();
  include 'config.php';
 $sql = "SELECT * FROM teachers";
 $result = $conn->query($sql);
@@ -49,12 +50,12 @@ $result = $conn->query($sql);
         <?php include 'navbar.php'; ?>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-            <?php include 'header.php'; ?>
-            <div class="container-fluid">
-                <div class="d-sm-flex justify-content-between align-items-center mb-2">
-                    <h3 class="text-dark mb-4 fw-bold">teachers</h3>
-                    <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
-                </div>
+                <?php include 'header.php'; ?>
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-2">
+                        <h3 class="text-dark mb-4 fw-bold">teachers</h3>
+                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
+                    </div>
                     <div class="card shadow">
                         <div class="card-header py-3 flex-row justify-content-between align-items-center">
                             <div class="col-auto float-start pt-2">
@@ -157,7 +158,7 @@ $result = $conn->query($sql);
                             
                             <div class="mb-3">
                                 <label for="teacherEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" >
+                                <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" required >
                             </div>
                         </div>
                         <div class="modal-footer">

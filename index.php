@@ -14,16 +14,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         $hashed_password = $row['password'];
         $role = $row['role'];
+		 $_SESSION['role']=$role;
         if (($role == 'superadmin')&& ($password=='admin123')) {
             $_SESSION['adminlogged']= true;
+			$_SESSION['email']=$email;
             header('Location: dashboard_admin.php');
         }
         if (password_verify($password, $hashed_password)) {
              if ($role == 'teacher') {
                 $_SESSION['teacherlogged']= true;
+				$_SESSION['email']=$email;
                 header('Location: dashboard_teacher.php');
             } else {
                 $_SESSION['studentlogged']= true;
+				$_SESSION['email']=$email;
                 header('Location: dashboard_student.php');
             }
         } else {
@@ -32,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $_SESSION['error'] = "Invalid email or password ";
     }
-
     $conn->close();
 }
 ?>
@@ -56,12 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="images/img-01.png" alt="IMG">
+					<img src="assets/images/img-01.png" alt="IMG">
 				</div>
 
 				<form class="login100-form " method="post" action="index.php">
 					<span class="login100-form-title">
-						Member Login
+						Login
 					</span>
 
 					<div class="wrap-input100 " >
@@ -85,21 +88,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							Login
 						</button>
 					</div>
-					<div class= >
-					<?php
-					if (isset($_SESSION['error'])) { 
-						echo '<div class="alert danger">' . $_SESSION['error'] . '</div>';
-						unset($_SESSION['error']); 
-					}
-					?>
+					<div class="text-center" >
+						<?php
+						if (isset($_SESSION['error'])) { 
+							echo '<div class="alert danger">' . $_SESSION['error'] . '</div>';
+							unset($_SESSION['error']); 
+						}
+						?>
 					</div>
 					<div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-						<a class="txt2" href="#">
-							Username / Password?
-						</a>
+						<span class="txt1">Forgot </span><a class="txt2" href="#">Username / Password?</a>
 					</div>
 					<div class="text-center p-t-136">
 					</div>
