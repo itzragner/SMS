@@ -25,8 +25,18 @@ session_start();
                     <div class="row mb-3">
                         <div class="col-lg-4">
                             <div class="card mb-3">
-                                <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="160" height="160">
-                                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Change Photo</button></div>
+                                <div class="card-body text-center shadow">
+                                    <div class="image_area">
+                                        <form method="post">
+                                            <label for="upload_image">
+                                                <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="160" height="160" id="uploaded_image" class="img-responsive img-circle" />
+                                                <div class="overlay">
+                                                    <button class="btn btn-primary " >Click to Change Profile Image</button>
+                                                </div>
+                                                <input type="file" name="image" class="image" id="upload_image" style="display:none">
+                                            </label>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card shadow mb-4">
@@ -166,9 +176,99 @@ session_start();
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Crop Image Before Upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <img src="" id="sample_image" />
+                            </div>
+                            <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="crop">Crop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+$(document).ready(function(){	
+	var $modal = $('#modal');
+	var image = document.getElementById('sample_image');
+	var cropper;
+	$('#upload_image').change(function(event){
+    	var files = event.target.files;
+    	var done = function (url) {
+      		image.src = url;
+      		$modal.modal('show');
+    	};
+    	if (files && files.length > 0)
+    	{
+			reader = new FileReader();
+			reader.onload = function (event) {
+				done(reader.result);
+			};
+			reader.readAsDataURL(files[0]);
+		}
+	});
+	$modal.on('shown.bs.modal', function() {
+    	cropper = new Cropper(image, {
+    		aspectRatio: 1,
+    		viewMode: 3,
+    		preview: '.preview'
+    	});
+	}).on('hidden.bs.modal', function() {
+   		cropper.destroy();
+   		cropper = null;
+	});
+	$("#crop").click(function(){
+    	canvas = cropper.getCroppedCanvas({
+      		width: 400,
+      		height: 400,
+    	});
+    	canvas.toBlob(function(blob) {
+        	var reader = new FileReader();
+         	reader.readAsDataURL(blob); 
+         	reader.onloadend = function() {
+            	var base64data = reader.result;  
+            	$.ajax({
+            		url: "upload.php",
+                	method: "POST",                	
+                	data: {image: base64data},
+                	success: function(data){
+                    	console.log(data);
+                    	$modal.modal('hide');
+                    	$('#uploaded_image').attr('src', data);
+                	}
+              	});
+         	}
+    	});
+    });
+	
+});
+</script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
+
+
 </body>
 
 </html>
