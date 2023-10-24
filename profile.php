@@ -1,6 +1,9 @@
 <?php
 session_start();
+$email=$_SESSION['email'];
 //ggdgmrdkgd
+//$firstname=$_SESSION['fistname'];
+//$lastname=$_SESSION['lastname'];
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
@@ -12,6 +15,14 @@ session_start();
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
+		<link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
+		<script src="https://unpkg.com/dropzone"></script>
+		<script src="https://unpkg.com/cropperjs"></script>
 </head>
 
 <body id="page-top">
@@ -29,7 +40,7 @@ session_start();
                                     <div class="image_area">
                                         <form method="post">
                                             <label for="upload_image">
-                                                <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image2.jpeg" width="160" height="160" id="uploaded_image" class="img-responsive img-circle" />
+                                                <img class="rounded-circle mb-3 mt-4  uploaded_image" src="assets/img/dogs/image2.jpeg" width="160" height="160"  class="img-responsive img-circle" />
                                                 <div class="overlay">
                                                     <button class="btn btn-primary " >Click to Change Profile Image</button>
                                                 </div>
@@ -105,25 +116,28 @@ session_start();
                                             <p class="text-primary m-0 fw-bold">User Settings</p>
                                         </div>
                                         <div class="card-body">
-                                            <form>
+                                            <form >
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="username"><strong>Username</strong></label><input class="form-control" type="text" id="username" placeholder="user.name" name="username"></div>
+                                                        <div class="mb-3"><label class="form-label" for="matricule"><strong>Matricule</strong></label><input class="form-control formuser" type="text" id="matricule" placeholder="matricule" disabled name="mat"value=<?php echo" $mat "?>></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control" type="email" id="email" placeholder="user@example.com" name="email"></div>
+                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control formuser" type="email" id="email" placeholder="user@example.com" disabled name="email" value=<?php echo" $email "?>></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control" type="text" id="first_name" placeholder="John" name="first_name"></div>
+                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control formuser" type="text" id="first_name" placeholder="John" disabled name="first_name"value=<?php echo" $firstname "?>></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control" type="text" id="last_name" placeholder="Doe" name="last_name"></div>
+                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control formuser" type="text" id="last_name" placeholder="Doe" disabled name="last_name" value=<?php echo" $lastname "?>></div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save Settings</button></div>
                                             </form>
+                                            <div class="mb-3">
+                                                <button id="saveuser" class="btn btn-primary btn-sm" type="submit" disabled>Save Settings</button>
+                                                <button class="btn btn-secondary btn-sm" id="edituser" >Edit</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card shadow">
@@ -132,16 +146,19 @@ session_start();
                                         </div>
                                         <div class="card-body">
                                             <form>
-                                                <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong></label><input class="form-control" type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
+                                                <div class="mb-3"><label class="form-label" for="address"><strong>Address</strong></label><input class="form-control formcontact" disabled type="text" id="address" placeholder="Sunset Blvd, 38" name="address"></div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="city"><strong>City</strong></label><input class="form-control" type="text" id="city" placeholder="Los Angeles" name="city"></div>
+                                                        <div class="mb-3"><label class="form-label" for="city"><strong>City</strong></label><input class="form-control formcontact" disabled type="text" id="city" placeholder="Los Angeles" name="city"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="country"><strong>Country</strong></label><input class="form-control" type="text" id="country" placeholder="USA" name="country"></div>
+                                                        <div class="mb-3"><label class="form-label" for="country"><strong>Country</strong></label><input class="form-control formcontact" disabled type="text" id="country" placeholder="USA" name="country"></div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3"><button class="btn btn-primary btn-sm" type="submit">Save&nbsp;Settings</button></div>
+                                                <div class="mb-3">
+                                                <button id="savecontact" class="btn btn-primary btn-sm" type="submit" disabled>Save Settings</button>
+                                                <button class="btn btn-secondary btn-sm" id="editcontact" >Edit</button>
+                                            </div>
                                             </form>
                                         </div>
                                     </div>
@@ -157,7 +174,7 @@ session_start();
                             <div class="row">
                                 <div class="col-md-6">
                                     <form>
-                                        <div class="mb-3"><label class="form-label" for="signature"><strong>Signature</strong><br></label><textarea class="form-control" id="signature" rows="4" name="signature"></textarea></div>
+                                        <div class="mb-3"><label class="form-label" for="signature"><strong>Signature</strong><br></label><textarea class="form-control formforum" id="signature" rows="4" name="signature"></textarea></div>
                                         <div class="mb-3">
                                             <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"><strong>Notify me about new replies</strong></label></div>
                                         </div>
@@ -208,6 +225,21 @@ session_start();
     </div>
 
     <script>
+$("#edituser").click(function(){
+    $(".formuser ").prop('disabled', false);
+    $("#saveuser ").prop('disabled', false);
+    $(this).prop('disabled', true);
+
+});
+$("#edituser").click(function(){
+    
+});
+$("#editcontact").click(function(){
+    $(".formcontact ").prop('disabled', false);
+    $("#savecontact ").prop('disabled', false);
+    $(this).prop('disabled', true);
+
+});
 
 $(document).ready(function(){	
 	var $modal = $('#modal');
@@ -255,7 +287,7 @@ $(document).ready(function(){
                 	success: function(data){
                     	console.log(data);
                     	$modal.modal('hide');
-                    	$('#uploaded_image').attr('src', data);
+                    	$('.uploaded_image').attr('src', data);
                 	}
               	});
          	}
@@ -264,9 +296,6 @@ $(document).ready(function(){
 	
 });
 </script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
 
 
 </body>
