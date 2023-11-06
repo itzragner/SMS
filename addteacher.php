@@ -22,7 +22,7 @@ if(mysqli_num_rows($check_result2)>0){
 $sql1 = "INSERT INTO teachers ( firstname, lastname, email, num, matricule, age ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age')";
 $password = $firstname . $mat;
 $password = password_hash($password, PASSWORD_DEFAULT);
-$sql2 = "INSERT INTO accounts ( email , password, role ) VALUES ('$email', '$password','teacher')";
+$sql2 = "INSERT INTO accounts ( email , password, role ,matricule ) VALUES ('$email', '$password','teacher','$mat')";
 if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE  )){
   header('Location: teachers.php');
   die();

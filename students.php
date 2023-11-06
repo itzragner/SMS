@@ -154,16 +154,7 @@ $result = $conn->query($sql);
                                 <div class="mb-3">
                                     <label for="studentMatricule" class="form-label">Matricule</label>
                                     <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="studentNum" class="form-label">Num</label>
-                                    <input type="number" class="form-control" id="studentNum" name="studentNum" value="">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="studentMatricule" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="studentMatricule" name="studentMatricule" value="" required>
-                                </div>
-                                
+                                </div>                          
                                 <div class="mb-3">
                                     <label for="studentEmail" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>

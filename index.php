@@ -53,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
 </head>
 <body>	
 	<div class="limiter">

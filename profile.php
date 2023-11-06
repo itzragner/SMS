@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $email=$_SESSION['email'];
 //ggdgmrdkgd
@@ -42,9 +43,10 @@ $email=$_SESSION['email'];
                                             <label for="upload_image">
                                                 <img class="rounded-circle mb-3 mt-4  uploaded_image" src="assets/img/dogs/image2.jpeg" width="160" height="160"  class="img-responsive img-circle" />
                                                 <div class="overlay">
-                                                    <button class="btn btn-primary " >Click to Change Profile Image</button>
+                                                    <button class="btn btn-primary "  >Click to Change Profile Image</button>
+                                                    <input type="file" name="image" class="image" class="upload_image" style="display:none">
                                                 </div>
-                                                <input type="file" name="image" class="image" id="upload_image" style="display:none">
+                                                
                                             </label>
                                         </form>
                                     </div>
@@ -116,28 +118,45 @@ $email=$_SESSION['email'];
                                             <p class="text-primary m-0 fw-bold">User Settings</p>
                                         </div>
                                         <div class="card-body">
-                                            <form >
+                                            <form action="profile.php" method="post" >
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="matricule"><strong>Matricule</strong></label><input class="form-control formuser" type="text" id="matricule" placeholder="matricule" disabled name="mat"value=<?php echo" $mat "?>></div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="matricule">
+                                                                <strong>Matricule</strong>
+                                                            </label>
+                                                            <input class="form-control" type="text" name="mat" id="matricule" placeholder="matricule" disabled  value=<?php echo" $mat "?>></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="email"><strong>Email Address</strong></label><input class="form-control formuser" type="email" id="email" placeholder="user@example.com" disabled name="email" value=<?php echo" $email "?>></div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="email">
+                                                                <strong>Email Address</strong>
+                                                            </label>
+                                                            <input class="form-control formuser" name="emaile" type="email" id="email" placeholder="user@example.com" disabled  value=<?php echo" $email "?>></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="first_name"><strong>First Name</strong></label><input class="form-control formuser" type="text" id="first_name" placeholder="John" disabled name="first_name"value=<?php echo" $firstname "?>></div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="first_name">
+                                                                <strong>First Name</strong>
+                                                            </label>
+                                                            <input class="form-control formuser" type="text" id="first_name" name="first_name" placeholder="John" disabled value=<?php echo" $firstname "?>></div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="last_name"><strong>Last Name</strong></label><input class="form-control formuser" type="text" id="last_name" placeholder="Doe" disabled name="last_name" value=<?php echo" $lastname "?>></div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="last_name">
+                                                                <strong>Last Name</strong>
+                                                            </label>
+                                                            <input class="form-control formuser" type="text" id="last_name" name="last_name" placeholder="Doe" disabled  value=<?php echo" $lastname "?>></div>
                                                     </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <button id="saveuser" class="btn btn-primary btn-sm" type="submit" disabled>Save Settings</button>
+                                                    <button class="btn btn-secondary btn-sm" id="edituser" >Edit</button>
                                                 </div>
                                             </form>
-                                            <div class="mb-3">
-                                                <button id="saveuser" class="btn btn-primary btn-sm" type="submit" disabled>Save Settings</button>
-                                                <button class="btn btn-secondary btn-sm" id="edituser" >Edit</button>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="card shadow">
@@ -223,17 +242,89 @@ $email=$_SESSION['email'];
             </div>
         </div>
     </div>
+    <?php
+/*
+include_once 'config.php';
+// get the data from the AJAX request
+$matriculeuser = $_POST['mat'];
+$emailuser = $_POST['emaile'];
+$first_name = $_POST['first_name'];
+$last_name = $_POST['last_name'];
+
+// update the user settings
+if ($_SESSION['studentlogged'] == true){
+    $sql = "UPDATE students SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
+    $stmt->execute();
+    $result1 = $stmt->affected_rows;
+    $stmt->close();
+} elseif($_SESSION['teacherlogged'] == true){
+    $sql = "UPDATE teachers SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
+    $stmt->execute();
+    $result1 = $stmt->affected_rows;
+    $stmt->close();
+}
+
+$sql = "UPDATE accounts SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
+$stmt = $db->prepare($sql);
+$stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
+$stmt->execute();
+$result2 = $stmt->affected_rows;
+$stmt->close();
+
+if ($result1 > 0 || $result2 > 0) {
+    echo 'User settings updated successfully.';
+} else {
+    echo 'Failed to update user settings.';
+}
+*/
+
+?>
 
     <script>
+    /*
+$("#saveuser").click(function(e){
+    e.preventDefault(); // prevent the default form submission
+
+    // get the form data
+    var matricule = $("#matricule").val();
+    var email = $("#email").val();
+    var first_name = $("#first_name").val();
+    var last_name = $("#last_name").val();
+
+    // send the data to the server
+    $.ajax({
+        url: 'update_user_settings.php', // the PHP script that will handle the update
+        type: 'POST',
+        data: {
+            matricule: matricule,
+            email: email,
+            first_name: first_name,
+            last_name: last_name
+        },
+        success: function(response) {
+            // handle the response from the server
+            console.log(response);
+        }
+    });
+});
+
+*/
 $("#edituser").click(function(){
     $(".formuser ").prop('disabled', false);
     $("#saveuser ").prop('disabled', false);
     $(this).prop('disabled', true);
 
 });
-$("#edituser").click(function(){
-    
-});
+$("#saveuser").click(function(e){
+    $(".formuser ").prop('disabled', true);
+    $(this).prop('disabled', true);
+    $("#edituser").prop('disabled', false);
+
+});  
 $("#editcontact").click(function(){
     $(".formcontact ").prop('disabled', false);
     $("#savecontact ").prop('disabled', false);
