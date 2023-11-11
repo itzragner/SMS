@@ -133,7 +133,7 @@ $result = $conn->query($sql);
                             <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="addStudentForm" method="POST" action="addstudent.php">
+                        <form id="addStudentForm" method="post" action="addstudent.php">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="studentFirstName" class="form-label">First Name</label>
@@ -180,7 +180,7 @@ $result = $conn->query($sql);
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="editStudentForm" method="POST" action="editstudent.php">
+                        <form id="editStudentForm" method="post" action="editstudent.php">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="studentFirstNameedit" class="form-label">First Name</label>
@@ -199,13 +199,13 @@ $result = $conn->query($sql);
                                     <input type="number" class="form-control" id="studentNumedit" name="studentNumedit" value="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="studentMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="studentMatriculeedit" name="studentMatriculeedit" value="" disabled>
+                                    <label for="studentmatriculeedit" class="form-label">Matricule</label>
+                                    <input type="text" class="form-control readonly-disabled" id="studentmatriculeedit" name="studentmatriculeedit" value="" readonly>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="studentEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="studentEmailedit" name="studentEmailedit" value="" disabled>
+                                    <input type="email" class="form-control readonly-disabled" id="studentEmailedit" name="studentemailedit" value="" readonly>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -300,7 +300,7 @@ $result = $conn->query($sql);
             $('#studentLastNameedit').val(lastName);
             $('#studentAgeedit').val(age);
             $('#studentNumedit').val(num);
-            $('#studentMatriculeedit').val(mat);
+            $('#studentmatriculeedit').val(mat);
             $('#studentEmailedit').val(email);
             
         }

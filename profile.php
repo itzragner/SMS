@@ -118,14 +118,14 @@ $email=$_SESSION['email'];
                                             <p class="text-primary m-0 fw-bold">User Settings</p>
                                         </div>
                                         <div class="card-body">
-                                            <form action="profile.php" method="post" >
+                                            <form action="updatesettings.php" method="post" >
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="matricule">
                                                                 <strong>Matricule</strong>
                                                             </label>
-                                                            <input class="form-control" type="text" name="mat" id="matricule" placeholder="matricule" disabled  value=<?php echo" $mat "?>></div>
+                                                            <input class="form-control " type="text" name="matri" id="matricule" placeholder="matricule" disabled  value=<?php echo" $mat "?>></div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
@@ -242,93 +242,22 @@ $email=$_SESSION['email'];
             </div>
         </div>
     </div>
-    <?php
-/*
-include_once 'config.php';
-// get the data from the AJAX request
-$matriculeuser = $_POST['mat'];
-$emailuser = $_POST['emaile'];
-$first_name = $_POST['first_name'];
-$last_name = $_POST['last_name'];
-
-// update the user settings
-if ($_SESSION['studentlogged'] == true){
-    $sql = "UPDATE students SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
-    $stmt->execute();
-    $result1 = $stmt->affected_rows;
-    $stmt->close();
-} elseif($_SESSION['teacherlogged'] == true){
-    $sql = "UPDATE teachers SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
-    $stmt->execute();
-    $result1 = $stmt->affected_rows;
-    $stmt->close();
-}
-
-$sql = "UPDATE accounts SET email = ?, first_name = ?, last_name = ? WHERE matricule = ?";
-$stmt = $db->prepare($sql);
-$stmt->bind_param('ssss', $emailuser, $first_name, $last_name, $matriculeuser);
-$stmt->execute();
-$result2 = $stmt->affected_rows;
-$stmt->close();
-
-if ($result1 > 0 || $result2 > 0) {
-    echo 'User settings updated successfully.';
-} else {
-    echo 'Failed to update user settings.';
-}
-*/
-
-?>
-
+  
     <script>
-    /*
-$("#saveuser").click(function(e){
-    e.preventDefault(); // prevent the default form submission
 
-    // get the form data
-    var matricule = $("#matricule").val();
-    var email = $("#email").val();
-    var first_name = $("#first_name").val();
-    var last_name = $("#last_name").val();
-
-    // send the data to the server
-    $.ajax({
-        url: 'update_user_settings.php', // the PHP script that will handle the update
-        type: 'POST',
-        data: {
-            matricule: matricule,
-            email: email,
-            first_name: first_name,
-            last_name: last_name
-        },
-        success: function(response) {
-            // handle the response from the server
-            console.log(response);
-        }
-    });
-});
-
-*/
 $("#edituser").click(function(){
     $(".formuser ").prop('disabled', false);
+    $("#matricule").prop('disabled',false);
+    $("#matricule").prop('readonly',true);
     $("#saveuser ").prop('disabled', false);
     $(this).prop('disabled', true);
 
 });
-$("#saveuser").click(function(e){
-    $(".formuser ").prop('disabled', true);
-    $(this).prop('disabled', true);
-    $("#edituser").prop('disabled', false);
 
-});  
 $("#editcontact").click(function(){
     $(".formcontact ").prop('disabled', false);
     $("#savecontact ").prop('disabled', false);
-    $(this).prop('disabled', true);
+    $(this).prop('disabled', false);
 
 });
 

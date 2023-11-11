@@ -201,12 +201,12 @@ $result = $conn->query($sql);
                                 </div>
                                 <div class="mb-3">
                                     <label for="teacherMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control" id="teacherMatriculeedit" name="teacherMatriculeedit" value="" disabled>
+                                    <input type="text" class="form-control readonly-disabled" id="teachermatriculeedit" name="teacherMatriculeedit" value="" readonly>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="teacherEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="teacherEmailedit" name="teacherEmailedit" value="" disabled>
+                                    <input type="email" class="form-control readonly-disabled" id="teacherEmailedit" name="teacherEmailedit" value="" readonly>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -282,7 +282,7 @@ $result = $conn->query($sql);
             $('#teacherLastNameedit').val(lastName);
             $('#teacherAgeedit').val(age);
             $('#teacherNumedit').val(num);
-            $('#teacherMatriculeedit').val(mat);
+            $('#teachermatriculeedit').val(mat);
             $('#teacherEmailedit').val(email);
             
         }

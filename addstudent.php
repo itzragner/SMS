@@ -12,7 +12,7 @@ $check_result1 = mysqli_query($conn, $check_sql1);
 $check_result2 = mysqli_query($conn, $check_sql2);
 
 if (mysqli_num_rows($check_result1) > 0) {
-  echo "The matricule already exists. try another one.";
+  echo "The matricule already exists.Try another one.";
   exit;
 }
 if(mysqli_num_rows($check_result2)>0){

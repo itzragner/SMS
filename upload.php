@@ -2,7 +2,8 @@
 
 //upload.php
 
-/*$folderPath = 'upload/';
+
+$folderPath = 'upload/';
 
 $image_parts = explode(";base64,", $_POST['image']);
 $image_type_aux = explode("image/", $image_parts[0]);
@@ -12,7 +13,7 @@ $file = $folderPath . uniqid() . '.png';
 
 file_put_contents($file, $image_base64);
 
-echo $file;*/
+echo $file;
 
 if(isset($_POST["image"]))
 {
