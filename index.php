@@ -56,6 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 <body>	
+	<?php
+	if (isset($_GET['logout'])) {
+    echo '<div class="alert alert-warning" role="alert">
+            You have been disconnected.
+          </div>';
+}
+
+	?>
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">

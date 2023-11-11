@@ -20,12 +20,12 @@
             <?php if ($_SESSION['role'] == 'superadmin'): ?>
                 <li class="nav-item "><a class="nav-link " href="students.php"><i class="fas fa-table"></i><span>Students</span></a>
                 <li class="nav-item"><a class="nav-link "  href="teachers.php"><i class="fas fa-table"></i><span>Teachers</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="login.php"><i class="far fa-user-circle"></i><span>Login</span></a></li>
-                <li class="nav-item"><a class="nav-link" href="register.php"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
-                <?php endif; ?>
-            <?php if ($_SESSION['role'] == ('student' ||'superadmin')):?>
-                <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>Absence</span></a>
             <?php endif; ?>
+            <?php if ($_SESSION['role'] == ('student' ||'superadmin'||'teacher' )):?>
+                <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>Absence</span></a>
+                <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>tasks</span></a>
+            <?php endif; ?>
+            
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
     </div>
