@@ -139,18 +139,22 @@ $result = $conn->query($sql);
                                 <label for="teacherFirstName" class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
                             </div>
+
                             <div class="mb-3">  
                                 <label for="teacherLastName" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
                             </div>
+
                             <div class="mb-3">
                                 <label for="teacherAge" class="form-label">Age</label>
                                 <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
                             </div>
+
                             <div class="mb-3">
                                 <label for="teacherNum" class="form-label">Num</label>
                                 <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
                             </div>
+
                             <div class="mb-3">
                                 <label for="teacherMatricule" class="form-label">Matricule</label>
                                 <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
@@ -160,12 +164,30 @@ $result = $conn->query($sql);
                                 <label for="teacherEmail" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" required >
                             </div>
+                            <div class="mb-3">
+                                <label for="teachergroups" class="form-label" >Groups</label>
+                                <select id="teachergroups" name="group_ids[]" class="form-control" multiple >
+                                    <?php
+                                        $sql3 = "SELECT * FROM groupes";
+                                        $result3 = $conn->query($sql3);
+                                        if ($result3->num_rows > 0) {
+                                            while($row3 = $result3->fetch_assoc()) {
+                                                echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                            }
+                                        } else {
+                                            echo "<option value='0'>0 results</option>";
+                                        }
+                                    ?>*
+                                </select>
+                            </div>
+                                        
+                                
                         </div>
                         <div class="modal-footer">
                             <div id="message" class=" alert" ></div>
                             <div >
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">add</button>
                             </div>
                         </div>
                     </form>
@@ -181,39 +203,6 @@ $result = $conn->query($sql);
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="editteacherForm" method="POST" action="editteacher.php">
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="teacherFirstNameedit" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="teacherFirstNameedit" name="teacherFirstNameedit" value="" required>
-                                </div>
-                                <div class="mb-3">  
-                                    <label for="teacherLastNameedit" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="teacherLastNameedit" name="teacherLastNameedit" value="" >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="teacherAgeedit" class="form-label">Age</label>
-                                    <input type="date" class="form-control" id="teacherAgeedit" name="teacherAgeedit" value="" >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="teacherNumedit" class="form-label">Num</label>
-                                    <input type="number" class="form-control" id="teacherNumedit" name="teacherNumedit" value="">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="teacherMatriculeedit" class="form-label">Matricule</label>
-                                    <input type="text" class="form-control readonly-disabled" id="teachermatriculeedit" name="teacherMatriculeedit" value="" readonly>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label for="teacherEmailedit" class="form-label">Email</label>
-                                    <input type="email" class="form-control readonly-disabled" id="teacherEmailedit" name="teacherEmailedit" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

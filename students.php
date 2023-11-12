@@ -1,8 +1,12 @@
 <?php
 session_start();
  include 'config.php';
-$sql = "SELECT * FROM students";
+
+$sql = "SELECT students.*, groupes.name AS group_name FROM students LEFT JOIN groupes ON students.group_id = groupes.id";
 $result = $conn->query($sql);
+$sql2 = "SELECT * FROM groupes";
+$result2 = $conn->query($sql2);
+
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
@@ -80,6 +84,7 @@ $result = $conn->query($sql);
                                             <th>Num</th>
                                             <th>Matricule</th>
                                             <th>Email</th>
+                                            <th>Classe</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -92,7 +97,8 @@ $result = $conn->query($sql);
                                               "</td><td>" . $row["age"]. 
                                               "</td><td>" . $row["num"]. 
                                               "</td><td>" . $row["matricule"]. 
-                                              "</td><td>" . $row["email"]. "</td></tr>";
+                                              "</td><td>" . $row["email"]. 
+                                              "</td><td>".$row["group_name"]."</td></tr>";
                                             }
                                           } else {
                                             echo "<tr>0 results</tr>";
@@ -108,6 +114,8 @@ $result = $conn->query($sql);
                                             <td><strong>Num</strong></td>
                                             <td><strong>Matricule</strong></td>
                                             <td><strong>Email</strong></td>
+                                            <td><strong>Classe</strong></td>
+                                        </tr>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -126,7 +134,7 @@ $result = $conn->query($sql);
     
     <div id="popup" >
         <div id="popupadd">
-            <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered " role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -158,6 +166,23 @@ $result = $conn->query($sql);
                                 <div class="mb-3">
                                     <label for="studentEmail" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="studentEmail" name="studentEmail" value="" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="studentGroupe" class="form-label">Groupe</label>
+                                    <select  class="form-control" id="studentGroupe" name="studentgroupe" value="" required>
+                                        <?php
+                                            
+                                            if ($result2->num_rows > 0) {
+                                                while($row2 = $result2->fetch_assoc()) {
+                                                    echo "<option value='" . $row2["id"] . "'>" .$row2["name"] . "</option>";
+                                                }
+                                            } else {
+                                            echo "0 results";
+                                            }
+                                            $result2 = $conn->query($sql2);
+
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -207,6 +232,22 @@ $result = $conn->query($sql);
                                     <label for="studentEmailedit" class="form-label">Email</label>
                                     <input type="email" class="form-control readonly-disabled" id="studentEmailedit" name="studentemailedit" value="" readonly>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="studentGroupeedit" class="form-label">Groupe</label>
+                                    <select  class="form-control" id="studentGroupeedit" name="studentgroupeedit" value="" required>
+                                        <?php
+                                            
+                                            if ($result2->num_rows > 0) {
+                                                while($row2 = $result2->fetch_assoc()) {
+                                                    echo "<option value='" . $row2["id"] . "'>" .$row2["name"] . "</option>";
+                                                }
+                                            } else {
+                                            echo "0 results";
+                                            }
+                                            $result2 = $conn->query($sql2);
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -218,7 +259,7 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div id="popupdelete" >
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog ">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -282,6 +323,7 @@ $result = $conn->query($sql);
         $('#studentMatricule').val('');
         $('#studentEmail').val('');
         $('#message').html('');
+        $('#studentGroupeedit').html('');
         $('#popup-add').modal('show');
     });
 
@@ -295,6 +337,7 @@ $result = $conn->query($sql);
             var num = row.find('td:eq(4)').text();
             var mat = row.find('td:eq(5)').text();
             var email = row.find('td:eq(6)').text();
+            var group =row.find('td:eq(7)').text();
             $('#popup-edit').modal('show');
             $('#studentFirstNameedit').val(firstName);
             $('#studentLastNameedit').val(lastName);
@@ -302,6 +345,8 @@ $result = $conn->query($sql);
             $('#studentNumedit').val(num);
             $('#studentmatriculeedit').val(mat);
             $('#studentEmailedit').val(email);
+            $('#studentGroupeedit').val(group);
+
             
         }
         else if(checkbox.length > 1){

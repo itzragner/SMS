@@ -23,7 +23,7 @@
             <?php endif; ?>
             <?php if ($_SESSION['role'] == ('student' ||'superadmin'||'teacher' )):?>
                 <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>Absence</span></a>
-                <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>tasks</span></a>
+                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasks</span></a>
             <?php endif; ?>
             
         </ul>

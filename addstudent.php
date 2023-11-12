@@ -6,6 +6,7 @@ $email=$_POST["studentEmail"];
 $age=$_POST["studentAge"];
 $num=$_POST["studentNum"];
 $mat=$_POST["studentMatricule"];
+$group_id = $_POST["studentgroupe"];
 $check_sql1 = "SELECT * FROM students WHERE matricule = '$mat' ";
 $check_sql2 = "SELECT * FROM accounts WHERE email = '$email' ";
 $check_result1 = mysqli_query($conn, $check_sql1);
@@ -19,7 +20,7 @@ if(mysqli_num_rows($check_result2)>0){
   echo "The email already exists. try another one.";
   exit;
 }
-$sql1 = "INSERT INTO students ( firstname, lastname, email, num, matricule, age ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age')";
+$sql1 = "INSERT INTO students ( firstname, lastname, email, num, matricule, age,group_id ) VALUES ('$firstname','$lastname','$email','$num','$mat','$age','$group_id')";
 $password = $firstname . $mat;
 $password = password_hash($password, PASSWORD_DEFAULT);
 $sql2 = "INSERT INTO accounts ( email , password, role ,matricule ) VALUES ('$email', '$password','student','$mat')";
