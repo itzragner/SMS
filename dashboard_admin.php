@@ -9,37 +9,7 @@ if ($_SESSION['adminlogged'] !== true) {
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link
-      rel="stylesheet"
-      data-purpose="Layout StyleSheet"
-      title="Web Awesome"
-      href="/css/app-wa-02670e9412103b5852dcbe140d278c49.css?vsn=d">
-    <link rel="stylesheet"href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-solid.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-regular.css"
-      >
-
-      <link
-        rel="stylesheet"
-        href="https://site-assets.fontawesome.com/releases/v6.4.2/css/sharp-light.css"
-      >
-</head>
-
+<?php include 'head.php'; ?>
 <body id="page-top">
     <div id="wrapper">
         <?php include 'navbar.php'; ?>
@@ -279,10 +249,6 @@ if ($_SESSION['adminlogged'] !== true) {
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
 </body>
 
 </html>

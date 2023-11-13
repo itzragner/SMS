@@ -9,7 +9,6 @@ $email=$_SESSION['email'];
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 <?php include 'head.php'; ?>
-
 <body id="page-top">
     
     <div id="wrapper">
