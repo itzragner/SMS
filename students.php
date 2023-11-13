@@ -10,19 +10,7 @@ $result2 = $conn->query($sql2);
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <script src="assets/js/jquery.min.js"></script>
-    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
-    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
-    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+<?php include 'head.php'; ?>
 <script>
     $(document).ready(function() {
         $('#tablestudent').DataTable({
@@ -278,10 +266,7 @@ $result2 = $conn->query($sql2);
 </div>
         </div>
     </div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
+
 </body>
 
 

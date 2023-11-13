@@ -7,21 +7,32 @@ include 'config.php';
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <script src="assets/js/jquery.min.js"></script>
-    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
-    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
-    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
-</head>
-
+<?php include 'head.php'; ?>
+<script>
+    $(document).ready(function() {
+        $('#tabletasks').DataTable({
+        columnDefs: [
+            {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
+        ],
+        order: [[ 1,'asc']],
+        language: {
+            search:"",
+            searchPlaceholder: "Search",
+            paginate: {
+            previous: '<span class="fa fa-chevron-left"></span>',   
+            next: '<span class="fa fa-chevron-right"></span>'
+            },
+            lengthMenu: 'Show <select class="form-control input-sm">'+
+            '<option value="10">10</option>'+
+            '<option value="20">20</option>'+
+            '<option value="30">30</option>'+
+            '<option value="40">40</option>'+
+            '<option value="50">50</option>'+
+            '<option value="-1">All</option>'
+        }
+    })  
+    } );
+</script> 
 <body id="page-top">
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
@@ -29,64 +40,83 @@ include 'config.php';
             <div id="content">
                 <?php include 'header.php'; ?>
                 <div class="container-fluid">
-                            <div class="d-sm-flex justify-content-between align-items-center mb-2">
-                                <h3 class="text-dark mb-4 fw-bold">tasks</h3>
-                                <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
+                    <div class="d-sm-flex justify-content-between align-items-center mb-2">
+                        <h3 class="text-dark mb-4 fw-bold">tasks</h3>
+                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-header py-3 flex-row justify-content-between align-items-center">
+                            <div class="col-auto float-start pt-2">
+                                <p class="text-primary fw-bold">tasks info</p>
                             </div>
-                            <div class="card shadow">
-                            <?php
-                            // Check if form is submitted by teacher
-                            if(isset($_POST['submit_task'])){
-                                $task = $_POST['task'];
-                                // Insert task into database
-                                $sql = "INSERT INTO tasks (task, status) VALUES ('$task', 'uncompleted')";
-                                mysqli_query($conn, $sql);
-                            }
-
-                            // Check if form is submitted by student
-                            if(isset($_POST['update_task'])){
-                                $task_id = $_POST['task_id'];
-                                $status = $_POST['status'];
-                                // Update task status in database
-                                $sql = "UPDATE tasks SET status='$status' WHERE id='$task_id'";
-                                mysqli_query($conn, $sql);
-                            }
-                            ?>
-                            <?php if ($_SESSION['role'] != ('student' )):?>
-                            <!-- Form for teacher to submit task -->
-                            <form method="post" action="">
-                                <input type="text" name="task" placeholder="Enter task here">
-                                <input type="submit" name="submit_task" value="Submit Task">
-                            </form>
-                            <?php endif; ?>
-
-                            <?php if ($_SESSION['role'] != 'teacher'): ?>
-                            <!-- Form for student to update task status -->
-                            <form method="post" action="">
-                                <input type="hidden" name="task_id" value="1"> <!-- Replace 1 with actual task ID -->
-                                <select name="status">
-                                    <option value="uncompleted">Uncompleted</option>
-                                    <option value="ondoing">On Doing</option>
-                                    <option value="completed">Completed</option>
-                                </select>
-                                <input type="submit" name="update_task" value="Update Task">
-                            </form>
-                            <?php endif; ?>
+                            <div class="btn-group float-end" role="group">
+                                <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
+                                <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
+                                <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
+                            </div>
+                            
                         </div>
-                        <footer class="bg-white sticky-footer">
-                            <div class="container my-auto">
-                                <div class="text-center my-auto copyright"><span>Copyright ©2023 designed By Med Arafet khadraoui</span></div>
+                        <div class="card-body">
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid" >
+                                <table class="table my-0 table-striped" id="tabletasks">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;" ></th>
+                                            <th>task name</th>
+                                            <th>teacher task</th>
+                                            <th>task started</th>
+                                            <th>task deadline</th>
+                                            <th>task status</th>
+                                            <th>action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>grid</td>
+                                            <td>htd</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                        <td></td>
+                                            <td>grid</td>
+                                            <td>htd</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td><strong>task name</strong></td>
+                                            <td><strong>teacher task</strong></td>
+                                            <td><strong>task started</strong></td>
+                                            <td><strong>deadline</strong></td>
+                                            <td><strong>task status</strong></td>
+                                            <td><strong>action</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
-                        </footer>
+                        </div>
+                    </div>
+                    <footer class="bg-white sticky-footer">
+                        <div class="container my-auto">
+                            <div class="text-center my-auto copyright"><span>Copyright ©2023 designed By Med Arafet khadraoui</span></div>
+                        </div>
+                    </footer>
                 </div>
             </div>
             <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
         </div>
     </div>
     
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/chart.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
+
 </body>
 </html>
