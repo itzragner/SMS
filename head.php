@@ -15,13 +15,14 @@
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
-
+<!--  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   -->
     <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
     <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
     <script src="https://unpkg.com/dropzone"></script>
     <script src="https://unpkg.com/cropperjs"></script>
+<!--
     <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -29,12 +30,14 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendor/css-hamburgers/hamburgers.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
-    <script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/main.css"> -->
+    
+    <!-- <script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/popper.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/select2/select2.min.js"></script>
-	<script src="assets/vendor/tilt/tilt.jquery.min.js"></script>
+	<script src="assets/vendor/tilt/tilt.jquery.min.js"></script> -->
+    
 
 
     <link rel="stylesheet"data-purpose="Layout StyleSheet"title="Web Awesome"href="/css/app-wa-02670e9412103b5852dcbe140d278c49.css?vsn=d">

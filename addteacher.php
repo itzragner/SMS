@@ -26,7 +26,7 @@ $stmt = $conn->prepare($sql1);
 $stmt->bind_param("ssisss", $firstname, $lastname, $email, $num, $mat, $age);
 $stmt->execute();
 
-// Get the ID of the inserted teacher
+
 $teacher_id = $stmt->insert_id;
 
 $password = $firstname . $mat;
