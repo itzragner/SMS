@@ -189,6 +189,7 @@ $result = $conn->query($sql);
                 </div>
     </div>
     </div>
+    <?php //teachers assign to group is ok   ?>
     <div id="popupedit">
     <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
