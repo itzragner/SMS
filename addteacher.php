@@ -23,7 +23,7 @@ if(mysqli_num_rows($check_result2)>0){
 }
 $sql1 = "INSERT INTO teachers ( firstname, lastname, email, num, matricule, age ) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql1);
-$stmt->bind_param("ssisss", $firstname, $lastname, $email, $num, $mat, $age);
+$stmt->bind_param("sssiss", $firstname, $lastname, $email, $num, $mat, $age);
 $stmt->execute();
 
 

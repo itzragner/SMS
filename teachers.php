@@ -6,7 +6,19 @@ $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-<?php include 'head.php'; ?>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Table - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+    <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+    <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
 <script>
     $(document).ready(function() {
         $('#tableteacher').DataTable({
@@ -31,7 +43,8 @@ $result = $conn->query($sql);
         }
     })  
     } );
-</script> 
+</script>   
+</head>
 <body id="page-top">
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
@@ -126,22 +139,18 @@ $result = $conn->query($sql);
                                 <label for="teacherFirstName" class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="teacherFirstName" name="teacherFirstName" value="" required>
                             </div>
-
                             <div class="mb-3">  
                                 <label for="teacherLastName" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="teacherLastName" name="teacherLastName" value="" >
                             </div>
-
                             <div class="mb-3">
                                 <label for="teacherAge" class="form-label">Age</label>
                                 <input type="date" class="form-control" id="teacherAge" name="teacherAge" value="" >
                             </div>
-
                             <div class="mb-3">
                                 <label for="teacherNum" class="form-label">Num</label>
                                 <input type="number" class="form-control" id="teacherNum" name="teacherNum" value="">
                             </div>
-
                             <div class="mb-3">
                                 <label for="teacherMatricule" class="form-label">Matricule</label>
                                 <input type="text" class="form-control" id="teacherMatricule" name="teacherMatricule" value="" required>
@@ -152,29 +161,27 @@ $result = $conn->query($sql);
                                 <input type="email" class="form-control" id="teacherEmail" name="teacherEmail" value="" required >
                             </div>
                             <div class="mb-3">
-                                <label for="teachergroups" class="form-label" >Groups</label>
-                                <select id="teachergroups" name="group_ids[]" class="form-control" multiple >
-                                    <?php
-                                        $sql3 = "SELECT * FROM groupes";
-                                        $result3 = $conn->query($sql3);
-                                        if ($result3->num_rows > 0) {
-                                            while($row3 = $result3->fetch_assoc()) {
-                                                echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
-                                            }
-                                        } else {
-                                            echo "<option value='0'>0 results</option>";
-                                        }
-                                    ?>*
-                                </select>
-                            </div>
-                                        
-                                
+                                        <label for="teachergroups" class="form-label" >Groups</label>
+                                        <select id="teachergroups" name="group_ids[]" class="form-control" multiple >
+                                            <?php
+                                                $sql3 = "SELECT * FROM groupes";
+                                                $result3 = $conn->query($sql3);
+                                                if ($result3->num_rows > 0) {
+                                                    while($row3 = $result3->fetch_assoc()) {
+                                                        echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                                    }
+                                                } else {
+                                                    echo "<option value='0'>0 results</option>";
+                                                }
+                                            ?>*
+                                        </select>
+                                    </div>  
                         </div>
                         <div class="modal-footer">
                             <div id="message" class=" alert" ></div>
                             <div >
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" value="Submit">add</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                             </div>
                         </div>
                     </form>
@@ -190,6 +197,57 @@ $result = $conn->query($sql);
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
+                        <form id="editteacherForm" method="POST" action="editteacher.php">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="teacherFirstNameedit" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="teacherFirstNameedit" name="teacherFirstNameedit" value="" required>
+                                </div>
+                                <div class="mb-3">  
+                                    <label for="teacherLastNameedit" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="teacherLastNameedit" name="teacherLastNameedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherAgeedit" class="form-label">Age</label>
+                                    <input type="date" class="form-control" id="teacherAgeedit" name="teacherAgeedit" value="" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherNumedit" class="form-label">Num</label>
+                                    <input type="number" class="form-control" id="teacherNumedit" name="teacherNumedit" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherMatriculeedit" class="form-label">Matricule</label>
+                                   
+                                    <input type="text" class="form-control readonly-disabled" id="teachermatriculeedit" name="teacherMatriculeedit" value="" readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="teacherEmailedit" class="form-label">Email</label>
+    
+                                    <input type="email" class="form-control readonly-disabled" id="teacherEmailedit" name="teacherEmailedit" value="" readonly>
+                                </div>
+                                <div class="mb-3">
+                                        <label for="teachergroups" class="form-label" >Groups</label>
+                                        <select id="teachergroups" name="group_ids[]" class="form-control" multiple >
+                                            <?php
+                                                $sql3 = "SELECT * FROM groupes";
+                                                $result3 = $conn->query($sql3);
+                                                if ($result3->num_rows > 0) {
+                                                    while($row3 = $result3->fetch_assoc()) {
+                                                        echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                                    }
+                                                } else {
+                                                    echo "<option value='0'>0 results</option>";
+                                                }
+                                            ?>*
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -200,10 +258,7 @@ $result = $conn->query($sql);
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
-
-
 <script>
-
     $(document).ready(function() {
     $('#addteacherForm').on('submit', function(matunique) {
         matunique.preventDefault();
@@ -222,9 +277,6 @@ $result = $conn->query($sql);
         });
     });
 });
-
-
-
     document.getElementById('check-all').addEventListener('change', function() {
     var checkboxes = document.querySelectorAll('.form-check-input');
     for (var i = 0; i < checkboxes.length; i++) {
@@ -242,7 +294,6 @@ $result = $conn->query($sql);
         $('#message').html('');
         $('#popup-add').modal('show');
     });
-
     $('#edit-btn').click(function() {
         var checkbox = $('input[type="checkbox"]:checked');
         if(checkbox.length === 1  ) { 
@@ -258,9 +309,10 @@ $result = $conn->query($sql);
             $('#teacherLastNameedit').val(lastName);
             $('#teacherAgeedit').val(age);
             $('#teacherNumedit').val(num);
+            $('#teacherMatriculeedit').val(mat);
             $('#teachermatriculeedit').val(mat);
             $('#teacherEmailedit').val(email);
-            
+
         }
         else if(checkbox.length > 1){
         alert('select just one row');
@@ -269,7 +321,6 @@ $result = $conn->query($sql);
         alert('No row selected');
         }
     });
-
     $('#delete-btn').click(function() {
         var checkboxes = $('input[type="checkbox"]:checked');
         if(checkboxes.length > 0) { 
@@ -286,7 +337,6 @@ $result = $conn->query($sql);
                         location.reload();
                     }
                 });
-
                 });
             }
         } else {
