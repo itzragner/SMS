@@ -21,9 +21,17 @@
                 <li class="nav-item "><a class="nav-link " href="students.php"><i class="fas fa-table"></i><span>Students</span></a>
                 <li class="nav-item"><a class="nav-link "  href="teachers.php"><i class="fas fa-table"></i><span>Teachers</span></a></li>
             <?php endif; ?>
-            <?php if ($_SESSION['role'] == ('student' ||'superadmin'||'teacher' )):?>
-                <li class="nav-item "><a class="nav-link " href="#"><i class="fas fa-table"></i><span>Absence</span></a>
+            <?php if ($_SESSION['role'] == ('superadmin' )):?>
+                
                 <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasks</span></a>
+                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
+                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksteacher</span></a>
+            <?php elseif ($_SESSION['role'] == ('student' )):?>
+                
+                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
+            <?php elseif ($_SESSION['role'] == ('teacher' )):?>
+                
+                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksteacher</span></a>
             <?php endif; ?>
             
         </ul>
