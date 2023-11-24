@@ -17,6 +17,8 @@ $result2 = $conn->query($sql2);
         $('#tablestudent').DataTable({
         columnDefs: [
             {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
+        ],buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
         ],
         order: [[ 1,'asc']],
         language: {

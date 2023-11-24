@@ -3,11 +3,9 @@ session_start();
 include 'config.php';
 $sql = "SELECT * FROM tasks";
 $result = $conn->query($sql);
-
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+
 <?php include 'head.php'; ?>
 <!-- data table -->
 <script>
@@ -52,8 +50,8 @@ $result = $conn->query($sql);
                                 <p class="text-primary fw-bold">tasks info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
-                                <button id="add-btntask" type="button" class="btn btn-primary"  >Add</button>
-                                <button id="edit-btntask" type="button"class="btn btn-primary"  >Edit</button>
+                            <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
+                                <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
                                 <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
                             </div>
                             
@@ -118,56 +116,53 @@ $result = $conn->query($sql);
 
     <div id="popup" >
         <div id="popupadd">
-            <div class="modal fade" id="popup-addtask" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="addtaskForm" method="post" action="addtask.php">
+                        <form id="addTaskForm" method="POST" action="#">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="tasktitle" class="form-label">tasktitle</label>
-                                    <input type="text" class="form-control" id="tasktitle" name="tasktitle" value="" required>
-                                </div>
-                                <div class="mb-3">  
-                                    <label for="taskstarted" class="form-label">taskstarted</label>
-                                    <input type="date" class="form-control" id="taskstarted" name="taskstarted" value=""  >
+                                    <label for="taskName" class="form-label">Task Name</label>
+                                    <input type="text" class="form-control" id="taskName" name="taskName" value="" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="taskdeadline" class="form-label">taskdeadline</label>
-                                    <input type="date" class="form-control" id="taskdeadline" name="taskdeadline" value="" >
+                                    <label for="taskStarted" class="form-label">Task Started</label>
+                                    <input type="date" class="form-control" id="taskStarted" name="taskStarted" value="" required>
                                 </div>
-        
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">description</label>
-                                    <input type="text" class="form-control" id="description" name="description" value="" required>
-                                </div>                          
-                                
-                                <div class="mb-3">
-                                    <label for="taskGroupe" class="form-label">Groupe</label>
-                                    <select  class="form-control" id="taskGroupe" name="taskgroupe" value="" required>
-                                        <?php
-                                            
-                                            if ($result2->num_rows > 0) {
-                                                while($row2 = $result2->fetch_assoc()) {
-                                                    echo "<option value='" . $row2["id"] . "'>" .$row2["name"] . "</option>";
-                                                }
-                                            } else {
-                                            echo "0 results";
-                                            }
-                                            $result2 = $conn->query($sql2);
-
-                                        ?>
-                                    </select>
+                                    <label for="taskDeadline" class="form-label">Task Deadline</label>
+                                    <input type="date" class="form-control" id="taskDeadline" name="taskDeadline" value="" required>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="taskDescription" class="form-label">Task Description</label>
+                                    <textarea class="form-control" id="taskDescription" name="taskDescription" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                            <label for="teachergroups" class="form-label" >Groups</label>
+                                            <select id="teachergroups" name="group_ids[]" class="form-control" multiple >
+                                                <?php
+                                                    $sql3 = "SELECT * FROM groupes";
+                                                    $result3 = $conn->query($sql3);
+                                                    if ($result3->num_rows > 0) {
+                                                        while($row3 = $result3->fetch_assoc()) {
+                                                            echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                                        }
+                                                    } else {
+                                                        echo "<option value='0'>0 results</option>";
+                                                    }
+                                                ?>*
+                                            </select>
+                                </div>  
                             </div>
                             <div class="modal-footer">
                                 <div id="message" class=" alert" ></div>
                                 <div >
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" value="Submit">Add</button>
+                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                                 </div>
                             </div>
                         </form>
@@ -176,59 +171,52 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div id="popupedit">
-            <div class="modal fade" id="popup-edittask" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal fade" id="popup-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">edit Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="edittaskForm" method="post" action="edittask.php">
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="tasktitleedit" class="form-label">tasktitle</label>
-                                    <input type="text" class="form-control" id="tasktitleedit" name="tasktitleedit" value="" required>
-                                </div>
-                                <div class="mb-3">  
-                                    <label for="taskstartededit" class="form-label">taskstarted</label>
-                                    <input type="date" class="form-control" id="taskstartededit" name="taskstartededit" value=""  >
-                                </div>
-                                <div class="mb-3">
-                                    <label for="taskdeadlineedit" class="form-label">taskdeadline</label>
-                                    <input type="date" class="form-control" id="taskdeadlineedit" name="taskdeadlineedit" value="" >
-                                </div>
-        
-                                <div class="mb-3">
-                                    <label for="descriptionedit" class="form-label">description</label>
-                                    <input type="text" class="form-control" id="descriptionedit" name="descriptionedit" value="" required>
-                                </div>                          
-                                
-                                <div class="mb-3">
-                                    <label for="taskGroupeedit" class="form-label">Groupe</label>
-                                    <select  class="form-control" id="taskGroupeedit" name="taskgroupeedit" value="" required>
-                                        <?php
-                                            
-                                            if ($result2->num_rows > 0) {
-                                                while($row2 = $result2->fetch_assoc()) {
-                                                    echo "<option value='" . $row2["id"] . "'>" .$row2["name"] . "</option>";
+                        <form id="editTaskForm" method="POST" action="editTask.php">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="taskNameEdit" class="form-label">Task Name</label>
+                                        <input type="text" class="form-control" id="taskNameEdit" name="taskNameEdit" value="" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskStartedEdit" class="form-label">Task Started</label>
+                                        <input type="date" class="form-control" id="taskStartedEdit" name="taskStartedEdit" value="" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskDeadlineEdit" class="form-label">Task Deadline</label>
+                                        <input type="date" class="form-control" id="taskDeadlineEdit" name="taskDeadlineEdit" value="" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskDescriptionEdit" class="form-label">Task Description</label>
+                                        <textarea class="form-control" id="taskDescriptionEdit" name="taskDescriptionEdit" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="teachergroupsEdit" class="form-label" >Groups</label>
+                                        <select id="teachergroupsEdit" name="group_ids[]" class="form-control" multiple >
+                                            <?php
+                                                $sql3 = "SELECT * FROM groupes";
+                                                $result3 = $conn->query($sql3);
+                                                if ($result3->num_rows > 0) {
+                                                    while($row3 = $result3->fetch_assoc()) {
+                                                        echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                                    }
+                                                } else {
+                                                    echo "<option value='0'>0 results</option>";
                                                 }
-                                            } else {
-                                            echo "0 results";
-                                            }
-                                            $result2 = $conn->query($sql2);
-
-                                        ?>
-                                    </select>
+                                            ?>*
+                                        </select>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div id="message" class=" alert" ></div>
-                                <div >
+                                <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" value="Submit">edit</button>
+                                    <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
                     </div>
                 </div>
             </div>
@@ -257,70 +245,64 @@ $result = $conn->query($sql);
 </body>
 
 <script>
-//         document.getElementById('check-all').addEventListener('change', function() {
-//     var checkboxes = document.querySelectorAll('.form-check-input');
-//     for (var i = 0; i < checkboxes.length; i++) {
-//         checkboxes[i].checked = this.checked;
-//     }
-// });
-$(document).ready(function() {
-    $('#add-btntask').click(function() {
-        console.log('Add button clicked');
-       
-    });
+    document.getElementById('check-all').addEventListener('change', function() {
+    var checkboxes = document.querySelectorAll('.form-check-input');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = this.checked;
+    }
 });
-    // $('#edit-btn').click(function() {
-    //     var checkbox = $('input[type="checkbox"]:checked');
-    //     if(checkbox.length === 1  ) { 
-    //         var row = checkbox.closest('tr');
-    //         var tasktitle = row.find('td:eq(1)').text();
-    //         var taskstarted = row.find('td:eq(2)').text(); 
-    //         var taskdeadline = row.find('td:eq(3)').text();
-    //         var description = row.find('td:eq(4)').text();
-    //         var taskGroupe = row.find('td:eq(5)').text();
-    //         var email = row.find('td:eq(6)').text();
-    //         var group =row.find('td:eq(7)').text();
-    //         $('#popup-edittask').modal('show');
-    //         $('#studentFirstNameedit').val(firstName);
-    //         $('#studentLastNameedit').val(lastName);
-    //         $('#studentAgeedit').val(age);
-    //         $('#studentNumedit').val(num);
-    //         $('#studentmatriculeedit').val(mat);
-    //         $('#studentEmailedit').val(email);
-    //         $('#studentGroupeedit').val(group);
+$('#add-btn').click(function() {
+    $('#taskName').val('');
+    $('#taskStarted').val('');
+    $('#taskDeadline').val('');
+    $('#taskDescription').val('');
+    $('#message').html('');
+    $('#popup-add').modal('show');
+});
+$('#edit-btn').click(function() {
+    var checkbox = $('input[type="checkbox"]:checked');
+    if(checkbox.length === 1) { 
+        var row = checkbox.closest('tr');
+        var taskName = row.find('td:eq(1)').text();
+        var taskStarted = row.find('td:eq(2)').text(); 
+        var taskDeadline = row.find('td:eq(3)').text();
+        var taskDescription = row.find('td:eq(4)').text();
+        $('#popup-edit').modal('show');
+        $('#taskNameEdit').val(taskName);
+        $('#taskStartedEdit').val(taskStarted);
+        $('#taskDeadlineEdit').val(taskDeadline);
+        $('#taskDescriptionEdit').val(taskDescription);
+    }
+    else if(checkbox.length > 1){
+        alert('select just one row');
+    }
+    else {
+        alert('No row selected');
+    }
+});
 
-            
-    //     }
-    //     else if(checkbox.length > 1){
-    //     alert('select just one row');
-    //     }
-    //     else {
-    //     alert('No row selected');
-    //     }
-    // });
+    $('#delete-btn').click(function() {
+        var checkboxes = $('input[type="checkbox"]:checked');
+        if(checkboxes.length > 0) { 
+            if(confirm('Are you sure you want to delete ')) {
+                checkboxes.each(function() {
+                    var row = $(this).closest('tr');
+                    var mat = row.find('td:eq(5)').text();
+                    var email= row.find('td:eq(6)').text(); 
+                    $.ajax({
+                    url: 'deletestudent.php',
+                    type: 'POST',
+                    data: { mat: mat, email:email  },
+                    success :function(response){
+                        location.reload();
+                    }
+                });
 
-    // $('#delete-btn').click(function() {
-    //     var checkboxes = $('input[type="checkbox"]:checked');
-    //     if(checkboxes.length > 0) { 
-    //         if(confirm('Are you sure you want to delete ')) {
-    //             checkboxes.each(function() {
-    //                 var row = $(this).closest('tr');
-    //                 var mat = row.find('td:eq(5)').text();
-    //                 var email= row.find('td:eq(6)').text(); 
-    //                 $.ajax({
-    //                 url: 'deletestudent.php',
-    //                 type: 'POST',
-    //                 data: { mat: mat, email:email  },
-    //                 success :function(response){
-    //                     location.reload();
-    //                 }
-    //             });
-
-    //             });
-    //         }
-    //     } else {
-    //         alert('No row selected');
-    //     }
-    // });
+                });
+            }
+        } else {
+            alert('No row selected');
+        }
+    });
 </script>
 </html>
