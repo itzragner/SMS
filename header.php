@@ -4,7 +4,6 @@ include_once 'config.php';
 
 $email=$_SESSION['email'];
 if ($_SESSION['role'] == 'superadmin'){
-    $query= "SELECT * FROM students WHERE email ='$email'";
     $username="admin";
     $firstname="admin";
     $lastname="admin";
@@ -21,6 +20,9 @@ if ($_SESSION['role'] == 'superadmin'){
     $lastname=$row['lastname'];
     $mat=$row['matricule'];
 }
+///session username
+$_SESSION['username']=$username;
+
 
 ?>
     <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">

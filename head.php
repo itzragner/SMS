@@ -23,6 +23,7 @@
     <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
     <script src="https://unpkg.com/dropzone"></script>
     <script src="https://unpkg.com/cropperjs"></script>
+    <link rel="stylesheet" type="text/css" href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--
     <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css">

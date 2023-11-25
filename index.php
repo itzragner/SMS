@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $hashed_password = $row['password'];
@@ -18,16 +17,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (($role == 'superadmin')&& ($password=='admin123')) {
             $_SESSION['adminlogged']= true;
 			$_SESSION['email']=$email;
+			$_SESSION['id']=18;
             header('Location: dashboard_admin.php');
         }
         if (password_verify($password, $hashed_password)) {
              if ($role == 'teacher') {
-                $_SESSION['teacherlogged']= true;
+				$_SESSION['teacherlogged']= true;
 				$_SESSION['email']=$email;
+				$sql2="SELECT id FROM teachers WHERE email = ?";
+				$stmt2 = $conn->prepare($sql2);
+				$stmt2->bind_param("s", $email);
+				$stmt2->execute();
+				$result2 = $stmt2->get_result();
+				$user = $result2->fetch_assoc();
+				$userId = $user['id'];
+				$_SESSION['id']=$userId;
+				echo "<script>console.log('Debug Objects: " . $_SESSION['id'] . "' );</script>";
                 header('Location: dashboard_teacher.php');
+
             } else {
                 $_SESSION['studentlogged']= true;
 				$_SESSION['email']=$email;
+				$sql2="SELECT id FROM students WHERE email = ?";
+				$stmt2 = $conn->prepare($sql2);
+				$stmt2->bind_param("s", $email);
+				$stmt2->execute();
+				$result2 = $stmt2->get_result();
+				$user = $result2->fetch_assoc();
+				$userId = $user['id'];
+				$_SESSION['id']=$userId;
+				echo "<script>console.log('Debug Objects: " . $_SESSION['id'] . "' );</script>";
                 header('Location: dashboard_student.php');
             }
         } else {

@@ -11,16 +11,14 @@
         <ul class="navbar-nav text-light" id="accordionSidebar">
             <?php if ($_SESSION['role'] == 'superadmin'): ?>
                 <li class="nav-item"><a class="nav-link" href="dashboard_admin.php"><i class="fas fa-tachometer-alt"></i><span>admin Dashboard</span></a></li>
+                <li class="nav-item "><a class="nav-link " href="students.php"><i class="fas fa-table"></i><span>Students</span></a>
+                <li class="nav-item"><a class="nav-link "  href="teachers.php"><i class="fas fa-table"></i><span>Teachers</span></a></li>
             <?php elseif ($_SESSION['role'] == 'student'): ?>
                 <li class="nav-item"><a class="nav-link" href="dashboard_student.php"><i class="fas fa-tachometer-alt"></i><span>Student Dashboard</span></a></li>
             <?php elseif ($_SESSION['role'] == 'teacher'): ?>
                 <li class="nav-item"><a class="nav-link" href="dashboard_teacher.php"><i class="fas fa-tachometer-alt"></i><span>Teacher Dashboard</span></a></li>
             <?php endif; ?>
             <li class="nav-item"><a class="nav-link"  href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
-            <?php if ($_SESSION['role'] == 'superadmin'): ?>
-                <li class="nav-item "><a class="nav-link " href="students.php"><i class="fas fa-table"></i><span>Students</span></a>
-                <li class="nav-item"><a class="nav-link "  href="teachers.php"><i class="fas fa-table"></i><span>Teachers</span></a></li>
-            <?php endif; ?>
             <?php if ($_SESSION['role'] == ('superadmin' )):?>
                 
                 <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasks</span></a>

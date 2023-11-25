@@ -1,12 +1,10 @@
 <?php
 session_start();
  include 'config.php';
-
 $sql = "SELECT students.*, groupes.name AS group_name FROM students LEFT JOIN groupes ON students.group_id = groupes.id";
 $result = $conn->query($sql);
 $sql2 = "SELECT * FROM groupes";
 $result2 = $conn->query($sql2);
-
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">

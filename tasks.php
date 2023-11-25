@@ -15,7 +15,7 @@ $result = $conn->query($sql);
             {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
         ],
         order: [[ 1,'asc']],
-        language: {
+        language: { 
             search:"",
             searchPlaceholder: "Search",
             paginate: {
@@ -50,7 +50,7 @@ $result = $conn->query($sql);
                                 <p class="text-primary fw-bold">tasks info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
-                            <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
+                                <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
                                 <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
                                 <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
                             </div>
@@ -67,20 +67,28 @@ $result = $conn->query($sql);
                                             <th>task started</th>
                                             <th>task deadline</th>
                                             <th>description</th>
-                                            <!-- <th>task status</th>
-                                            <th>action</th> -->
+                                            <th>task status</th>
+                                            <th>action</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php 
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
+                                                $description = $row["description"];
+                                              $shortDescription = substr($description, 0, 15);
+                                              if (strlen($description) > 15) {$shortDescription .= "...";}
                                               echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
                                               <td>' . $row["task_title"]. 
                                               "</td><td>" . $row["teachertask_name"]. 
                                               "</td><td>" . $row["task_started"]. 
-                                              "</td><td>" . $row["task_deadline"]. 
-                                              "</td><td>" . $row["description"]."</td></tr>";
+                                              "</td><td>" . $row["task_deadline"].
+                                              "</td><td>" . $shortDescription ."</td>".
+                                              "</td><td>" . $row["status"].
+                                                "<td> 
+                                                <button type=\"button\" class=\"btn\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                            </td>
+                                            </tr>";
                                             }
                                           } else {
                                             echo "<tr>0 results</tr>";
@@ -95,8 +103,8 @@ $result = $conn->query($sql);
                                             <td><strong>task started</strong></td>
                                             <td><strong>task deadline</strong></td>
                                             <td><strong>description</strong></td>
-                                            <!-- <td><strong>task status</strong></td>
-                                            <td><strong>action</strong></td> -->
+                                              <td><strong>task status</strong></td> 
+                                            <td><strong>action</strong></td> 
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -105,7 +113,7 @@ $result = $conn->query($sql);
                     </div>
                     <footer class="bg-white sticky-footer">
                         <div class="container my-auto">
-                            <div class="text-center my-auto copyright"><span>Copyright ©2023 designed By Med Arafet khadraoui</span></div>
+                            <div class="text-center my-auto copyright"><span>Copyright ©2023 devlopped By Med Arafet khadraoui</span></div>
                         </div>
                     </footer>
                 </div>
@@ -123,7 +131,7 @@ $result = $conn->query($sql);
                             <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
                             <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                         </div>
-                        <form id="addTaskForm" method="POST" action="#">
+                        <form id="addTaskForm" method="POST" action="addtask.php">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="taskName" class="form-label">Task Name</label>
@@ -244,65 +252,65 @@ $result = $conn->query($sql);
 
 </body>
 
-<script>
-    document.getElementById('check-all').addEventListener('change', function() {
-    var checkboxes = document.querySelectorAll('.form-check-input');
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = this.checked;
-    }
-});
-$('#add-btn').click(function() {
-    $('#taskName').val('');
-    $('#taskStarted').val('');
-    $('#taskDeadline').val('');
-    $('#taskDescription').val('');
-    $('#message').html('');
-    $('#popup-add').modal('show');
-});
-$('#edit-btn').click(function() {
-    var checkbox = $('input[type="checkbox"]:checked');
-    if(checkbox.length === 1) { 
-        var row = checkbox.closest('tr');
-        var taskName = row.find('td:eq(1)').text();
-        var taskStarted = row.find('td:eq(2)').text(); 
-        var taskDeadline = row.find('td:eq(3)').text();
-        var taskDescription = row.find('td:eq(4)').text();
-        $('#popup-edit').modal('show');
-        $('#taskNameEdit').val(taskName);
-        $('#taskStartedEdit').val(taskStarted);
-        $('#taskDeadlineEdit').val(taskDeadline);
-        $('#taskDescriptionEdit').val(taskDescription);
-    }
-    else if(checkbox.length > 1){
-        alert('select just one row');
-    }
-    else {
-        alert('No row selected');
-    }
-});
-
-    $('#delete-btn').click(function() {
-        var checkboxes = $('input[type="checkbox"]:checked');
-        if(checkboxes.length > 0) { 
-            if(confirm('Are you sure you want to delete ')) {
-                checkboxes.each(function() {
-                    var row = $(this).closest('tr');
-                    var mat = row.find('td:eq(5)').text();
-                    var email= row.find('td:eq(6)').text(); 
-                    $.ajax({
-                    url: 'deletestudent.php',
-                    type: 'POST',
-                    data: { mat: mat, email:email  },
-                    success :function(response){
-                        location.reload();
-                    }
-                });
-
-                });
+    <script>
+            document.getElementById('check-all').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = this.checked;
             }
-        } else {
-            alert('No row selected');
-        }
-    });
-</script>
+        });
+        $('#add-btn').click(function() {
+            $('#taskName').val('');
+            $('#taskStarted').val('');
+            $('#taskDeadline').val('');
+            $('#taskDescription').val('');
+            $('#message').html('');
+            $('#popup-add').modal('show');
+        });
+        $('#edit-btn').click(function() {
+            var checkbox = $('input[type="checkbox"]:checked');
+            if(checkbox.length === 1) { 
+                var row = checkbox.closest('tr');
+                var taskName = row.find('td:eq(1)').text();
+                var taskStarted = row.find('td:eq(3)').text(); 
+                var taskDeadline = row.find('td:eq(4)').text();
+                var taskDescription = row.find('td:eq(5)').text();
+                $('#popup-edit').modal('show');
+                $('#taskNameEdit').val(taskName);
+                $('#taskStartedEdit').val(taskStarted);
+                $('#taskDeadlineEdit').val(taskDeadline);
+                $('#taskDescriptionEdit').val(taskDescription);
+            }
+            else if(checkbox.length > 1){
+                alert('select just one row');
+            }
+            else {
+                alert('No row selected');
+            }
+        });
+
+            $('#delete-btn').click(function() {
+                var checkboxes = $('input[type="checkbox"]:checked');
+                if(checkboxes.length > 0) { 
+                    if(confirm('Are you sure you want to delete ')) {
+                        checkboxes.each(function() {
+                            var row = $(this).closest('tr');
+                            var mat = row.find('td:eq(5)').text();
+                            var email= row.find('td:eq(6)').text(); 
+                            $.ajax({
+                            url: 'deletestudent.php',
+                            type: 'POST',
+                            data: { mat: mat, email:email  },
+                            success :function(response){
+                                location.reload();
+                            }
+                        });
+
+                        });
+                    }
+                } else {
+                    alert('No row selected');
+                }
+            });
+            </script>
 </html>
