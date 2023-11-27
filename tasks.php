@@ -289,28 +289,26 @@ $result = $conn->query($sql);
             }
         });
 
-            $('#delete-btn').click(function() {
-                var checkboxes = $('input[type="checkbox"]:checked');
-                if(checkboxes.length > 0) { 
-                    if(confirm('Are you sure you want to delete ')) {
-                        checkboxes.each(function() {
-                            var row = $(this).closest('tr');
-                            var mat = row.find('td:eq(5)').text();
-                            var email= row.find('td:eq(6)').text(); 
-                            $.ajax({
-                            url: 'deletestudent.php',
+        $('#delete-btn').click(function() {
+            var checkboxes = $('input[type="checkbox"]:checked');
+            if(checkboxes.length > 0) { 
+                if(confirm('Are you sure you want to delete ')) {
+                    checkboxes.each(function() {
+                        var row = $(this).closest('tr');
+                        var taskName = row.find('td:eq(1)').text(); 
+                        $.ajax({
+                            url: 'deletetask.php',
                             type: 'POST',
-                            data: { mat: mat, email:email  },
+                            data: { name: taskName },
                             success :function(response){
                                 location.reload();
                             }
                         });
-
-                        });
-                    }
-                } else {
-                    alert('No row selected');
+                    });
                 }
-            });
-            </script>
+            } else {
+                alert('No row selected');
+            }
+        });
+    </script>
 </html>
