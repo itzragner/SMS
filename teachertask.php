@@ -2,13 +2,22 @@
 session_start();
 include 'config.php';
 $userId = $_SESSION['id'];
-echo "<script>console.log('Debug Objects: " .$userId. "' );</script>";
-$sql = "SELECT * FROM tasks WHERE id_teachertask = ?";
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tasks WHERE teachertask_name = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$result = $stmt->get_result();
-echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' );</script>";
+$stmt->bind_param("s", $username);
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<script>console.log('Row data: " . implode(", ", $row) . "');</script>";
+        }
+    } else {
+        echo "<script>console.log('Query successful but no rows returned');</script>";
+    }
+} else {
+    echo "<script>console.log('Query failed with error: " . $stmt->error . "');</script>";
+}
 ?>
 <!DOCTYPE html>
 
@@ -16,7 +25,7 @@ echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' )
 <!-- data table -->
 <script>
     $(document).ready(function() {
-        $('#tabletasks').DataTable({
+        $('#tabletaskteacher').DataTable({
         columnDefs: [
             {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
         ],
@@ -64,7 +73,7 @@ echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' )
                         </div>
                         <div class="card-body">
                         <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0 table-striped" id="tabletasks">
+                                <table class="table my-0 table-striped" id="tabletaskteacher">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;" ></th>
@@ -78,27 +87,27 @@ echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' )
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php 
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                $description = $row["description"];
-                                              $shortDescription = substr($description, 0, 15);
-                                              if (strlen($description) > 15) {$shortDescription .= "...";}
-                                              echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                              <td>' . $row["task_title"]. 
-                                              "</td><td>" . $row["teachertask_name"]. 
-                                              "</td><td>" . $row["task_started"]. 
-                                              "</td><td>" . $row["task_deadline"].
-                                              "</td><td>" . $shortDescription ."</td>".
-                                              "</td><td>" . $row["status"].
-                                                "<td> 
-                                                <button type=\"button\" class=\"btn\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                            </td>
-                                            </tr>";
+                                        <?php 
+                                            if ($result->num_rows > 0) {
+                                                while($row = $result->fetch_assoc()) {
+                                                    $description = $row["description"];
+                                                $shortDescription = substr($description, 0, 15);
+                                                if (strlen($description) > 15) {$shortDescription .= "...";}
+                                                echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
+                                                <td>' . $row["task_title"]. 
+                                                "</td><td>" . $row["teachertask_name"]. 
+                                                "</td><td>" . $row["task_started"]. 
+                                                "</td><td>" . $row["task_deadline"].
+                                                "</td><td>" . $shortDescription ."</td>".
+                                                "</td><td>" . $row["status"].
+                                                    "<td> 
+                                                    <button type=\"button\" class=\"btn\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                                </td>
+                                                </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr>0 results</tr>";
                                             }
-                                          } else {
-                                            echo "<tr>0 results</tr>";
-                                          }
                                         ?>
                                     </tbody>
                                     <tfoot>
@@ -109,7 +118,7 @@ echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' )
                                             <td><strong>task started</strong></td>
                                             <td><strong>task deadline</strong></td>
                                             <td><strong>description</strong></td>
-                                              <td><strong>task status</strong></td> 
+                                            <td><strong>task status</strong></td> 
                                             <td><strong>action</strong></td> 
                                         </tr>
                                     </tfoot>
@@ -295,28 +304,26 @@ echo "<script>console.log('resulk: " .$result->fetch_assoc()["task_title"]. "' )
             }
         });
 
-            $('#delete-btn').click(function() {
-                var checkboxes = $('input[type="checkbox"]:checked');
-                if(checkboxes.length > 0) { 
-                    if(confirm('Are you sure you want to delete ')) {
-                        checkboxes.each(function() {
-                            var row = $(this).closest('tr');
-                            var mat = row.find('td:eq(5)').text();
-                            var email= row.find('td:eq(6)').text(); 
-                            $.ajax({
-                            url: 'deletestudent.php',
+        $('#delete-btn').click(function() {
+            var checkboxes = $('input[type="checkbox"]:checked');
+            if(checkboxes.length > 0) { 
+                if(confirm('Are you sure you want to delete ')) {
+                    checkboxes.each(function() {
+                        var row = $(this).closest('tr');
+                        var taskName = row.find('td:eq(1)').text(); 
+                        $.ajax({
+                            url: 'deletetask.php',
                             type: 'POST',
-                            data: { mat: mat, email:email  },
+                            data: { name: taskName },
                             success :function(response){
                                 location.reload();
                             }
                         });
-
-                        });
-                    }
-                } else {
-                    alert('No row selected');
+                    });
                 }
-            });
+            } else {
+                alert('No row selected');
+            }
+        });
             </script>
 </html>
