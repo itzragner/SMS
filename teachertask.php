@@ -1,79 +1,181 @@
+
 <?php 
 session_start();
+
 include 'config.php';
+
+$email=$_SESSION['email'];
+if ($_SESSION['role'] == 'superadmin'){
+    $username="admin";
+    $firstname="admin";
+    $lastname="admin";
+    $mat="admin";
+}else  {
+    if ($_SESSION['role'] == 'student')
+        $query= "SELECT * FROM students WHERE email ='$email'";
+    elseif ($_SESSION['role'] == 'teacher')
+        $query= "SELECT * FROM teachers WHERE email ='$email'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($result);
+    $username = $row['firstname']." ".$row['lastname'];
+    $firstname=$row['firstname'];
+    $lastname=$row['lastname'];
+    $mat=$row['matricule'];
+}
+///session username
+$_SESSION['username']=$username;
+
 $userId = $_SESSION['id'];
 $username = $_SESSION['username'];
-$sql = "SELECT * FROM tasks WHERE teachertask_name = ?";
+$sql = "SELECT *FROM tasks 
+        INNER JOIN groupes ON tasks.id_groupetask = groupes.id 
+        WHERE tasks.teachertask_name = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
-if ($stmt->execute()) {
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "<script>console.log('Row data: " . implode(", ", $row) . "');</script>";
-        }
-    } else {
-        echo "<script>console.log('Query successful but no rows returned');</script>";
-    }
-} else {
-    echo "<script>console.log('Query failed with error: " . $stmt->error . "');</script>";
-}
+if ($stmt->execute()){
+   
+    $result = $stmt->get_result();}
+
+// if ($stmt->execute()) {
+//     $result = $stmt->get_result();
+//     if ($result->num_rows > 0) {
+//         while($row = $result->fetch_assoc()) {
+//             echo "<script>console.log('Row data: " . implode(", ", $row) . "');</script>";
+//         }
+//     } else {
+//         echo "<script>console.log('Query successful but no rows returned');</script>";
+//     }
+// } else {
+//     echo "<script>console.log('Query failed with error: " . $stmt->error . "');</script>";
+// }
+
 ?>
-<!DOCTYPE html>
 
 <?php include 'head.php'; ?>
-<!-- data table -->
-<script>
-    $(document).ready(function() {
-        $('#tabletaskteacher').DataTable({
-        columnDefs: [
-            {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
-        ],
-        order: [[ 1,'asc']],
-        language: { 
-            search:"",
-            searchPlaceholder: "Search",
-            paginate: {
-            previous: '<span class="fa fa-chevron-left"></span>',   
-            next: '<span class="fa fa-chevron-right"></span>'
-            },
-            lengthMenu: 'Show <select class="form-control input-sm">'+
-            '<option value="10">10</option>'+
-            '<option value="20">20</option>'+
-            '<option value="30">30</option>'+
-            '<option value="40">40</option>'+
-            '<option value="50">50</option>'+
-            '<option value="-1">All</option>'
-        }
-    })  
-    } );
-</script> 
 <body id="page-top">
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                <?php include 'header.php'; ?>
-                <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-2">
-                        <h3 class="text-dark mb-4 fw-bold">tasks</h3>
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                        </form>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item "  >
+                                <a class="nav-link" id="darkbtn" href="#"><i class="fas fa-moon" id="moon"></i> <i id="sun" class="fas fa-sun" hidden></i></a>
+                            </li>
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                    <form class="me-auto navbar-search w-100">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="me-3">
+                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 12, 2019</span>
+                                                <p>A new monthly report is ready to download!</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="me-3">
+                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 7, 2019</span>
+                                                <p>$290.29 has been deposited into your account!</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="me-3">
+                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 2, 2019</span>
+                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                                            </div>
+                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
+                                                <div class="bg-success status-indicator"></div>
+                                            </div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
+                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
+                                                <div class="status-indicator"></div>
+                                            </div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
+                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
+                                                <div class="bg-warning status-indicator"></div>
+                                            </div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
+                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
+                                                <div class="bg-success status-indicator"></div>
+                                            </div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
+                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+                                            </div>
+                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                    </div>
+                                </div>
+                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small"><?php echo $username; ?></span><img id="header_image" class=" border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Profile</a>
+                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>Settings</a>
+                                        <a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>Activity log</a>
+                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div  class="container-fluid main " >
+                    <div class="d-sm-flex justify-content-between align-items-center mb-2">     
+                        <h3 class="text-dark mb-4 fw-bold">teacher tasks</h3>
                         <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
                     </div>
                     <div class="card shadow">
                         <div class="card-header py-3 flex-row justify-content-between align-items-center">
                             <div class="col-auto float-start pt-2">
-                                <p class="text-primary fw-bold">tasks info</p>
+                                <p class="text-primary fw-bold">teacher tasks info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
                                 <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
                                 <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
                                 <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
                             </div>
-                            
                         </div>
                         <div class="card-body">
-                        <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0 table-striped" id="tabletaskteacher">
+                            <div class="table-responsive table mt-2"  role="grid" >
+                                <table class="table my-0 table-striped" id="tabletasks">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;" ></th>
@@ -82,33 +184,35 @@ if ($stmt->execute()) {
                                             <th>task started</th>
                                             <th>task deadline</th>
                                             <th>description</th>
-                                            <th>task status</th>
+                                            <th>Groupe</th>
                                             <th>action</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
-                                            if ($result->num_rows > 0) {
-                                                while($row = $result->fetch_assoc()) {
-                                                    $description = $row["description"];
+                                    <?php 
+                                        if ($result->num_rows > 0) {    
+                                            while($row = $result->fetch_assoc()) {
+                                                $description = $row["description"];
                                                 $shortDescription = substr($description, 0, 15);
-                                                if (strlen($description) > 15) {$shortDescription .= "...";}
-                                                echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                                <td>' . $row["task_title"]. 
-                                                "</td><td>" . $row["teachertask_name"]. 
-                                                "</td><td>" . $row["task_started"]. 
-                                                "</td><td>" . $row["task_deadline"].
-                                                "</td><td>" . $shortDescription ."</td>".
-                                                "</td><td>" . $row["status"].
-                                                    "<td> 
-                                                    <button type=\"button\" class=\"btn\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                                </td>
-                                                </tr>";
+                                                if (strlen($description) > 15) {
+                                                    $shortDescription .= "...";
                                                 }
-                                            } else {
-                                                echo "<tr>0 results</tr>";
+                                                echo '<tr>
+                                                        <td><input class="form-check-input" type="checkbox" /></td>
+                                                        <td>' . $row["task_title"]. 
+                                                        "</td><td>" . $row["teachertask_name"]. 
+                                                        "</td><td>" . $row["task_started"]. 
+                                                        "</td><td>" . $row["task_deadline"]. 
+                                                        "</td><td>" . $shortDescription. 
+                                                        "</td><td>" . $row["name"].
+                                                        "</td><td><button type=\"button\" class=\"btn view-btn\" data-group-id=\"".$row["id"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button></td>
+                                                      </tr>";
                                             }
-                                        ?>
+                                        }
+                                        else{
+                                            echo" no data";
+                                        }
+                                    ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -125,12 +229,168 @@ if ($stmt->execute()) {
                                 </table>
                             </div>
                         </div>
+                        <div>
+                        <!-- <div class="card-body">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" >
+                                <table class="table my-0 table-striped" id="tabletasks">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;" ></th>
+                                            <th>task name</th>
+                                            <th>teacher task</th>
+                                            <th>task started</th>
+                                            <th>task deadline</th>
+                                            <th>description</th>
+                                            <th>task status</th>
+                                            <th>action</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php 
+                                        // if ($result->num_rows > 0) {
+                                        //     while($row = $result->fetch_assoc()) {
+                                        //         $description = $row["description"];
+                                        //       $shortDescription = substr($description, 0, 15);
+                                        //       if (strlen($description) > 15) {$shortDescription .= "...";}
+                                        //       echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
+                                        //       <td>' . $row["task_title"]. 
+                                        //       "</td><td>" . $row["teachertask_name"]. 
+                                        //       "</td><td>" . $row["task_started"]. 
+                                        //       "</td><td>" . $row["task_deadline"].
+                                        //       "</td><td>" . $shortDescription ."</td>".
+                                        //       "</td><td>" . $row["status"].
+                                        //         "<td> 
+                                        //         <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                        //     </td>
+                                        //     </tr>";
+                                        //     }
+                                        //   } else {
+                                        //     echo "<tr>0 results</tr>";
+                                        //   }
+                                        ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td><strong>task name</strong></td>
+                                            <td><strong>teacher task</strong></td>
+                                            <td><strong>task started</strong></td>
+                                            <td><strong>task deadline</strong></td>
+                                            <td><strong>description</strong></td>
+                                              <td><strong>task status</strong></td> 
+                                            <td><strong>action</strong></td> 
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div> -->
+                        </div>
                     </div>
                     <footer class="bg-white sticky-footer">
                         <div class="container my-auto">
                             <div class="text-center my-auto copyright"><span>Copyright ©2023 devlopped By Med Arafet khadraoui</span></div>
                         </div>
                     </footer>
+                </div>
+                <div class="container-fluid main d-none" >
+                    <div class="d-sm-flex justify-content-between align-items-center mb-2">
+                        <div class="d-sm-flex">
+                            <button type="button" class="btn return"><i class="fa-sharp fa-solid fa-arrow-turn-down-left"></i> </button>
+                            <h3 class="text-dark mb-4 fw-bold">Students tasks </h3>
+                        </div>
+                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-header py-3 flex-row justify-content-between align-items-center">
+                            <div class="col-auto float-start pt-2">
+                                <p class="text-primary fw-bold">students tasks info</p>
+                            </div>
+                            <!-- <div class="btn-group float-end" role="group">
+                                <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
+                                <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
+                                <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
+                            </div> -->
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive table mt-2" role="grid">
+                            <table class="table my-0 table-striped" id="studentTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Work</th>
+                                        <th>Task Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+</div>
+                        <div>
+                        <!-- <div class="card-body">
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" >
+                                <table class="table my-0 table-striped" id="tabletasks">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%;" ></th>
+                                            <th>task name</th>
+                                            <th>teacher task</th>
+                                            <th>task started</th>
+                                            <th>task deadline</th>
+                                            <th>description</th>
+                                            <th>task status</th>
+                                            <th>action</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php 
+                                        // if ($result->num_rows > 0) {
+                                        //     while($row = $result->fetch_assoc()) {
+                                        //         $description = $row["description"];
+                                        //       $shortDescription = substr($description, 0, 15);
+                                        //       if (strlen($description) > 15) {$shortDescription .= "...";}
+                                        //       echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
+                                        //       <td>' . $row["task_title"]. 
+                                        //       "</td><td>" . $row["teachertask_name"]. 
+                                        //       "</td><td>" . $row["task_started"]. 
+                                        //       "</td><td>" . $row["task_deadline"].
+                                        //       "</td><td>" . $shortDescription ."</td>".
+                                        //       "</td><td>" . $row["status"].
+                                        //         "<td> 
+                                        //         <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                        //     </td>
+                                        //     </tr>";
+                                        //     }
+                                        //   } else {
+                                        //     echo "<tr>0 results</tr>";
+                                        //   }
+                                        ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td><strong>task name</strong></td>
+                                            <td><strong>teacher task</strong></td>
+                                            <td><strong>task started</strong></td>
+                                            <td><strong>task deadline</strong></td>
+                                            <td><strong>description</strong></td>
+                                              <td><strong>task status</strong></td> 
+                                            <td><strong>action</strong></td> 
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div> -->
+                        </div>
+                    </div>
+                    <footer class="bg-white sticky-footer">
+                        <div class="container my-auto">
+                            <div class="text-center my-auto copyright"><span>Copyright ©2023 devlopped By Med Arafet khadraoui</span></div>
+                        </div>
+                    </footer>
+                </div>
+
                 </div>
             </div>
             <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -263,23 +523,84 @@ if ($stmt->execute()) {
                 </div>  
             </div>
         </div>
+        <div id="popupview">
+        <div class="modal fade bd-example-modal-lg" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive table mt-2"  role="grid" >
+                                <table class="table my-0 table-striped" id="tabletasks">
+                                    <thead>
+                                        <tr></tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
 
     <script>
-            document.getElementById('check-all').addEventListener('change', function() {
+$(document).ready(function() {
+    $('.view-btn').click(function() {
+        var groupId = $(this).data('groupId'); // Assuming each view button has a data-group-id attribute with the group's ID
+        $.ajax({
+            url: 'fetchstudents.php',
+            type: 'POST',
+            data: {
+                groupId: groupId
+            },
+            dataType: 'json',
+            success: function(students) {
+                $('#studentTable tbody').empty();
+                students.forEach(function(student) {
+                    var row = '<tr>' +
+                        '<td>' + student.name + '</td>' +
+                        '<td>' + student.work + '</td>' +
+                        '<td>' + student.task_status + '</td>' +
+                        '</tr>';
+
+                    $('#studentTable tbody').append(row);
+                });
+                $('.container-fluid').toggleClass('d-none');
+            }
+        });
+    });
+    $('.return').click(function() {
+        $('.main').toggleClass('d-none');
+    });
+});
+
+
+        document.getElementById('taskStarted').addEventListener('change', function() {
+            document.getElementById('taskDeadline').min = this.value;
+        });
+        document.getElementById('check-all').addEventListener('change', function() {
             var checkboxes = document.querySelectorAll('.form-check-input');
             for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = this.checked;
             }
         });
+        
+
         $('#add-btn').click(function() {
-            $('#taskName').val('');
-            $('#taskStarted').val('');
-            $('#taskDeadline').val('');
-            $('#taskDescription').val('');
-            $('#message').html('');
+            // $('#taskName').val('');
+            // $('#taskStarted').val('');
+            // $('#taskDeadline').val('');
+            // $('#taskDescription').val('');
+            // $('#message').html('');
             $('#popup-add').modal('show');
         });
         $('#edit-btn').click(function() {
@@ -325,5 +646,5 @@ if ($stmt->execute()) {
                 alert('No row selected');
             }
         });
-            </script>
+    </script>
 </html>

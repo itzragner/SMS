@@ -1,6 +1,5 @@
 <?php
-
-include_once 'config.php';
+include 'config.php';
 
 $email=$_SESSION['email'];
 if ($_SESSION['role'] == 'superadmin'){

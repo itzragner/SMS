@@ -1,9 +1,23 @@
 <?php 
 session_start();
 include 'config.php';
-$sql = "SELECT *FROM tasks 
-        INNER JOIN groupes ON tasks.id_groupetask = groupes.id";
-$result = $conn->query($sql);
+$userId = $_SESSION['id'];
+$username = $_SESSION['username'];
+$sql = "SELECT * FROM tasks WHERE teachertask_name = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<script>console.log('Row data: " . implode(", ", $row) . "');</script>";
+        }
+    } else {
+        echo "<script>console.log('Query successful but no rows returned');</script>";
+    }
+} else {
+    echo "<script>console.log('Query failed with error: " . $stmt->error . "');</script>";
+}
 ?>
 <!DOCTYPE html>
 
@@ -11,7 +25,7 @@ $result = $conn->query($sql);
 <!-- data table -->
 <script>
     $(document).ready(function() {
-        $('#tabletasks').DataTable({
+        $('#tabletaskteacher').DataTable({
         columnDefs: [
             {  "targets": [0], "searchable": false, "orderable": false} ,{"visible": true }
         ],
@@ -42,7 +56,7 @@ $result = $conn->query($sql);
                 <?php include 'header.php'; ?>
                 <div class="container-fluid">
                     <div class="d-sm-flex justify-content-between align-items-center mb-2">
-                        <h3 class="text-dark mb-4 fw-bold">tasks</h3>
+                        <h3 class="text-dark mb-4 fw-bold">teacher tasks</h3>
                         <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
                     </div>
                     <div class="card shadow">
@@ -59,7 +73,7 @@ $result = $conn->query($sql);
                         </div>
                         <div class="card-body">
                         <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0 table-striped" id="tabletasks">
+                                <table class="table my-0 table-striped" id="tabletaskteacher">
                                     <thead>
                                         <tr>
                                             <th style="width: 10%;" ></th>
@@ -68,32 +82,32 @@ $result = $conn->query($sql);
                                             <th>task started</th>
                                             <th>task deadline</th>
                                             <th>description</th>
-                                            <th>Groupe</th>
+                                            <th>task status</th>
                                             <th>action</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php 
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                $description = $row["description"];
-                                              $shortDescription = substr($description, 0, 15);
-                                              if (strlen($description) > 15) {$shortDescription .= "...";}
-                                              echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                              <td>' . $row["task_title"]. 
-                                              "</td><td>" . $row["teachertask_name"]. 
-                                              "</td><td>" . $row["task_started"]. 
-                                              "</td><td>" . $row["task_deadline"].
-                                              "</td><td>" . $shortDescription ."</td>".
-                                              "</td><td>" . $row["name"].
-                                                "<td> 
-                                                <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                            </td>
-                                            </tr>";
+                                        <?php 
+                                            if ($result->num_rows > 0) {
+                                                while($row = $result->fetch_assoc()) {
+                                                    $description = $row["description"];
+                                                $shortDescription = substr($description, 0, 15);
+                                                if (strlen($description) > 15) {$shortDescription .= "...";}
+                                                echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
+                                                <td>' . $row["task_title"]. 
+                                                "</td><td>" . $row["teachertask_name"]. 
+                                                "</td><td>" . $row["task_started"]. 
+                                                "</td><td>" . $row["task_deadline"].
+                                                "</td><td>" . $shortDescription ."</td>".
+                                                "</td><td>" . $row["status"].
+                                                    "<td> 
+                                                    <button type=\"button\" class=\"btn\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                                </td>
+                                                </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr>0 results</tr>";
                                             }
-                                          } else {
-                                            echo "<tr>0 results</tr>";
-                                          }
                                         ?>
                                     </tbody>
                                     <tfoot>
@@ -104,7 +118,7 @@ $result = $conn->query($sql);
                                             <td><strong>task started</strong></td>
                                             <td><strong>task deadline</strong></td>
                                             <td><strong>description</strong></td>
-                                              <td><strong>Groupes</strong></td> 
+                                            <td><strong>task status</strong></td> 
                                             <td><strong>action</strong></td> 
                                         </tr>
                                     </tfoot>
@@ -249,45 +263,17 @@ $result = $conn->query($sql);
                 </div>  
             </div>
         </div>
-        <div id="popupview">
-        <div class="modal fade" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Task</h5>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="taskNameEdit" class="form-label">Task Name</label>
-                                <input type="text" class="form-control" id="taskNameEdit" name="taskNameEdit" value="htfhfth" readonly>
-                            </div>
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 </body>
 
     <script>
-        document.getElementById('taskStarted').addEventListener('change', function() {
-            document.getElementById('taskDeadline').min = this.value;
-        });
             document.getElementById('check-all').addEventListener('change', function() {
             var checkboxes = document.querySelectorAll('.form-check-input');
             for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = this.checked;
             }
         });
-        $('#view-btn').click(function(){
-            $('#popup-view').modal('show');
-        }); 
-
         $('#add-btn').click(function() {
             $('#taskName').val('');
             $('#taskStarted').val('');
@@ -339,5 +325,5 @@ $result = $conn->query($sql);
                 alert('No row selected');
             }
         });
-    </script>
+            </script>
 </html>
