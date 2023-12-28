@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $sql = "DELETE FROM tasks WHERE task_title = ?";
         $stmt = $conn->prepare($sql);
-
         $stmt->bind_param("s", $taskName);
 
         if ($stmt->execute()) {

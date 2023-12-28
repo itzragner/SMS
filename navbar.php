@@ -23,10 +23,10 @@
                 
                 <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasks</span></a>
                 <li class="nav-item "><a class="nav-link " href="teachertask.php"><i class="fas fa-table"></i><span>tasksteacher</span></a>
-                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
+                <li class="nav-item "><a class="nav-link " href="studenttask.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
             <?php elseif ($_SESSION['role'] == ('student' )):?>
                 
-                <li class="nav-item "><a class="nav-link " href="tasks.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
+                <li class="nav-item "><a class="nav-link " href="studenttask.php"><i class="fas fa-table"></i><span>tasksstudent</span></a>
             <?php elseif ($_SESSION['role'] == ('teacher' )):?>
                 <li class="nav-item "><a class="nav-link " href="teachertask.php"><i class="fas fa-table"></i><span>tasksteacher</span></a>
             <?php endif; ?>

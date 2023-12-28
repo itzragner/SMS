@@ -23,18 +23,19 @@ if ($_SESSION['role'] == 'superadmin'){
     $mat=$row['matricule'];
 }
 ///session username
-$_SESSION['username']=$username;
+$_SESSION['username'] = $username;
 
 $userId = $_SESSION['id'];
 $username = $_SESSION['username'];
-$sql = "SELECT *FROM tasks 
-        INNER JOIN groupes ON tasks.id_groupetask = groupes.id 
-        WHERE tasks.teachertask_name = ?";
+
+$sql = "SELECT * FROM tasks 
+        INNER JOIN student_tasks ON tasks.id_tasks = student_tasks.task_id 
+        WHERE student_tasks.student_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("i", $userId);
 if ($stmt->execute()){
-   
-    $result = $stmt->get_result();}
+    $result = $stmt->get_result();
+}
 
 // if ($stmt->execute()) {
 //     $result = $stmt->get_result();
@@ -159,13 +160,13 @@ if ($stmt->execute()){
                 </nav>
                 <div  class="container-fluid main " >
                     <div class="d-sm-flex justify-content-between align-items-center mb-2">     
-                        <h3 class="text-dark mb-4 fw-bold">teacher tasks</h3>
+                        <h3 class="text-dark mb-4 fw-bold">Student tasks</h3>
                         <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
                     </div>
                     <div class="card shadow">
                         <div class="card-header py-3 flex-row justify-content-between align-items-center">
                             <div class="col-auto float-start pt-2">
-                                <p class="text-primary fw-bold">teacher tasks info</p>
+                                <p class="text-primary fw-bold">Student tasks info</p>
                             </div>
                             <div class="btn-group float-end" role="group">
                                 <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
@@ -184,7 +185,7 @@ if ($stmt->execute()){
                                             <th>task started</th>
                                             <th>task deadline</th>
                                             <th>description</th>
-                                            <th>Groupe</th>
+                                            <th>task status</th>
                                             <th>action</th> 
                                         </tr>
                                     </thead>
@@ -204,13 +205,13 @@ if ($stmt->execute()){
                                                         '</td><td>' . $row["task_started"]. 
                                                         '</td><td>' . $row["task_deadline"]. 
                                                         '</td><td>' . $shortDescription. 
-                                                        '</td><td>' . $row["name"].
+                                                        '</td><td>' . $row["task_status"].
                                                         '</td><td><button type="button" class="btn view-btn" id='.$row["id_tasks"].' data-group-id="'.$row["id"].'"onclick="onview('.$row["id_tasks"].')"><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button></td>
                                                       </tr>';
                                             }
                                         }
                                         else{
-                                            echo" no data";
+                                            echo" no task ";
                                         }
                                     ?>
                                     </tbody>
@@ -229,62 +230,7 @@ if ($stmt->execute()){
                                 </table>
                             </div>
                         </div>
-                        <div>
-                        <!-- <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0 table-striped" id="tabletasks">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;" ></th>
-                                            <th>task name</th>
-                                            <th>teacher task</th>
-                                            <th>task started</th>
-                                            <th>task deadline</th>
-                                            <th>description</th>
-                                            <th>task status</th>
-                                            <th>action</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php 
-                                        // if ($result->num_rows > 0) {
-                                        //     while($row = $result->fetch_assoc()) {
-                                        //         $description = $row["description"];
-                                        //       $shortDescription = substr($description, 0, 15);
-                                        //       if (strlen($description) > 15) {$shortDescription .= "...";}
-                                        //       echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                        //       <td>' . $row["task_title"]. 
-                                        //       "</td><td>" . $row["teachertask_name"]. 
-                                        //       "</td><td>" . $row["task_started"]. 
-                                        //       "</td><td>" . $row["task_deadline"].
-                                        //       "</td><td>" . $shortDescription ."</td>".
-                                        //       "</td><td>" . $row["status"].
-                                        //         "<td> 
-                                        //         <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                        //     </td>
-                                        //     </tr>";
-                                        //     }
-                                        //   } else {
-                                        //     echo "<tr>0 results</tr>";
-                                        //   }
-                                        ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
-                                            <td><strong>task name</strong></td>
-                                            <td><strong>teacher task</strong></td>
-                                            <td><strong>task started</strong></td>
-                                            <td><strong>task deadline</strong></td>
-                                            <td><strong>description</strong></td>
-                                              <td><strong>task status</strong></td> 
-                                            <td><strong>action</strong></td> 
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div> -->
-                        </div>
+                        
                     </div>
                     <footer class="bg-white sticky-footer">
                         <div class="container my-auto">
@@ -295,8 +241,7 @@ if ($stmt->execute()){
                 <div class="container-fluid main d-none" >
                     <div class="d-sm-flex justify-content-between align-items-center mb-2">
                         <div class="d-sm-flex">
-                            <button type="button" class="btn return"><i class="fa-sharp fa-solid fa-arrow-turn-down-left"></i> </button>
-                            <h3 class="text-dark mb-4 fw-bold">Students tasks </h3>
+                            <h3 class="text-dark mb-4 fw-bold">Student tasks </h3>
                         </div>
                         <a class="btn btn-primary btn-sm d-none d-sm-inline-block " role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i> Export</a>
                     </div>
@@ -305,11 +250,9 @@ if ($stmt->execute()){
                             <div class="col-auto float-start pt-2">
                                 <p class="text-primary fw-bold">students tasks info</p>
                             </div>
-                            <!-- <div class="btn-group float-end" role="group">
-                                <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
-                                <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
-                                <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
-                            </div> -->
+                            <div class="btn-group float-end" role="group">
+                                <button id="delete-btn"  type="button"class="btn btn-primary return" >Close</button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table mt-2" role="grid">
@@ -328,62 +271,7 @@ if ($stmt->execute()){
                                 </table>
                             </div>
                         </div>
-                        <div>
-                        <!-- <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" >
-                                <table class="table my-0 table-striped" id="tabletasks">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 10%;" ></th>
-                                            <th>task name</th>
-                                            <th>teacher task</th>
-                                            <th>task started</th>
-                                            <th>task deadline</th>
-                                            <th>description</th>
-                                            <th>task status</th>
-                                            <th>action</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php 
-                                        // if ($result->num_rows > 0) {
-                                        //     while($row = $result->fetch_assoc()) {
-                                        //         $description = $row["description"];
-                                        //       $shortDescription = substr($description, 0, 15);
-                                        //       if (strlen($description) > 15) {$shortDescription .= "...";}
-                                        //       echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                        //       <td>' . $row["task_title"]. 
-                                        //       "</td><td>" . $row["teachertask_name"]. 
-                                        //       "</td><td>" . $row["task_started"]. 
-                                        //       "</td><td>" . $row["task_deadline"].
-                                        //       "</td><td>" . $shortDescription ."</td>".
-                                        //       "</td><td>" . $row["status"].
-                                        //         "<td> 
-                                        //         <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                        //     </td>
-                                        //     </tr>";
-                                        //     }
-                                        //   } else {
-                                        //     echo "<tr>0 results</tr>";
-                                        //   }
-                                        ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
-                                            <td><strong>task name</strong></td>
-                                            <td><strong>teacher task</strong></td>
-                                            <td><strong>task started</strong></td>
-                                            <td><strong>task deadline</strong></td>
-                                            <td><strong>description</strong></td>
-                                              <td><strong>task status</strong></td> 
-                                            <td><strong>action</strong></td> 
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div> -->
-                        </div>
+                    
                     </div>
                     <footer class="bg-white sticky-footer">
                         <div class="container my-auto">
@@ -524,32 +412,32 @@ if ($stmt->execute()){
                 </div>  
             </div>
         </div>
-        <!-- <div id="popupview">
-        <div class="modal fade bd-example-modal-lg" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Task</h5>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive table mt-2"  role="grid" >
-                                <table class="table my-0 table-striped" id="tabletasks">
-                                    <thead>
-                                        <tr></tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>    
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
+        <div id="popupview">
+            <!-- <div class="modal fade bd-example-modal-lg" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+                                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive table mt-2"  role="grid" >
+                                    <table class="table my-0 table-striped" id="tabletasks">
+                                        <thead>
+                                            <tr></tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div> -->
+            </div> -->
+        </div> 
 
 </body>
 

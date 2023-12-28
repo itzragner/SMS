@@ -2,11 +2,14 @@
 include 'config.php';
 
 $groupId = $_POST['groupId'];
+$taskId = $_POST['task'];
 
-$query = "SELECT * FROM students WHERE group_id = ?";
+$query = "SELECT distinct students.*, student_tasks.* FROM students 
+          LEFT JOIN student_tasks ON students.id = student_tasks.student_id 
+          WHERE students.group_id = ? and student_tasks.task_id=? ";
+
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $groupId);
-
+$stmt->bind_param("ii", $groupId,$taskId);
 if ($stmt->execute()){
     $result = $stmt->get_result();
     $students = $result->fetch_all(MYSQLI_ASSOC);
@@ -15,3 +18,4 @@ if ($stmt->execute()){
     // Handle error
     echo json_encode(["error" => $stmt->error]);
 }
+?>

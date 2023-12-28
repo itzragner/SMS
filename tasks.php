@@ -87,7 +87,7 @@ $result = $conn->query($sql);
                                               "</td><td>" . $shortDescription ."</td>".
                                               "</td><td>" . $row["name"].
                                                 "<td> 
-                                                <button type=\"button\" id=\"view-btn\" class=\"btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                                <button type=\"button\" class=\"btn view-btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
                                             </td>
                                             </tr>";
                                             }
@@ -250,23 +250,38 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div id="popupview">
-        <div class="modal fade" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Task</h5>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="taskNameEdit" class="form-label">Task Name</label>
-                                <input type="text" class="form-control" id="taskNameEdit" name="taskNameEdit" value="htfhfth" readonly>
+            <div class="modal fade" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+                                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
                             </div>
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                            <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="taskNameview" class="form-label">Task Name</label>
+                                        <input type="text" class="form-control" id="taskNameview" name="taskNameview" value="" disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskStartedview" class="form-label">Task Started</label>
+                                        <input type="date" class="form-control" id="taskStartedview" name="taskStartedview" value="" disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskDeadlineview" class="form-label">Task Deadline</label>
+                                        <input type="date" class="form-control" id="taskDeadlineview" name="taskDeadlineview" value="" disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="taskDescriptionview" class="form-label">Task Description</label>
+                                        <textarea class="form-control" id="taskDescriptionview" name="taskDescriptionview" disabled value="" ></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="teachergroupsview" class="form-label" >Groups</label>
+                                        <input class="form-control" type="text" value="" disabled id="teachergroupsview" >
+                                    </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -284,9 +299,23 @@ $result = $conn->query($sql);
                 checkboxes[i].checked = this.checked;
             }
         });
-        $('#view-btn').click(function(){
+        $('.view-btn').click(function(){
+            var row = $(this).closest('tr');
+            var taskName = row.find('td:eq(1)').text();
+            var taskStarted = row.find('td:eq(3)').text(); 
+            var taskDeadline = row.find('td:eq(4)').text();
+            var taskDescription = row.find('td:eq(5)').text();
+            var taskGroup = row.find('td:eq(6)').text();
             $('#popup-view').modal('show');
-        }); 
+            $('#taskNameview').val(taskName);
+            $('#taskStartedview').val(taskStarted);
+            $('#taskDeadlineview').val(taskDeadline);
+            $('#taskDescriptionview').val(taskDescription);
+            $('#teachergroupsview').val(taskGroup);
+        
+
+            
+        });
 
         $('#add-btn').click(function() {
             $('#taskName').val('');
@@ -332,6 +361,7 @@ $result = $conn->query($sql);
                             success :function(response){
                                 location.reload();
                             }
+                            
                         });
                     });
                 }
