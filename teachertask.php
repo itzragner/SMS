@@ -1,7 +1,10 @@
-
+<html>
 <?php 
 session_start();
-
+if (!$_SESSION['teacherlogged'] && !$_SESSION['adminlogged']) {
+    header('Location: index.php');
+    exit;
+}
 include 'config.php';
 
 $email=$_SESSION['email'];
@@ -52,7 +55,7 @@ if ($stmt->execute()){
 ?>
 
 <?php include 'head.php'; ?>
-<body id="page-top">
+<body id="page-top" >
     <div id="wrapper" >
         <?php include 'navbar.php'; ?>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -210,7 +213,7 @@ if ($stmt->execute()){
                                             }
                                         }
                                         else{
-                                            echo" no data";
+                                            echo"<tr> 0 tasks created</tr>";
                                         }
                                     ?>
                                     </tbody>

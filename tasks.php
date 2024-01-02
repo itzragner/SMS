@@ -1,5 +1,9 @@
 <?php 
 session_start();
+if ($_SESSION['adminlogged'] !== true) {
+    header('Location: index.php');
+    exit;
+}
 include 'config.php';
 $sql = "SELECT *FROM tasks 
         INNER JOIN groupes ON tasks.id_groupetask = groupes.id";
@@ -77,22 +81,20 @@ $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
                                                 $description = $row["description"];
-                                              $shortDescription = substr($description, 0, 15);
-                                              if (strlen($description) > 15) {$shortDescription .= "...";}
-                                              echo '<tr><td><input class="form-check-input" type="checkbox" /></td>
-                                              <td>' . $row["task_title"]. 
-                                              "</td><td>" . $row["teachertask_name"]. 
-                                              "</td><td>" . $row["task_started"]. 
-                                              "</td><td>" . $row["task_deadline"].
-                                              "</td><td>" . $shortDescription ."</td>".
-                                              "</td><td>" . $row["name"].
-                                                "<td> 
-                                                <button type=\"button\" class=\"btn view-btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
-                                            </td>
-                                            </tr>";
+                                                $shortDescription = substr($description, 0, 15);
+                                                if (strlen($description) > 15) {$shortDescription .= "...";}
+                                                echo '<tr><td><input class="form-check-input" type="checkbox" /><p hidden>'.$row["id_tasks"].'</p></td>
+                                                <td>' . $row["task_title"]. 
+                                                "</td><td>" . $row["teachertask_name"]. 
+                                                "</td><td>" . $row["task_started"]. 
+                                                "</td><td>" . $row["task_deadline"].
+                                                "</td><td>" . $shortDescription ."</td>".
+                                                "</td><td>" . $row["name"].
+                                                "<td><button type=\"button\" class=\"btn view-btn\" data-task-id=\"".$row["id_tasks"]."\" ><i class=\"fa-sharp fa-solid fa-pen-to-square\"></i> view</button>
+                                                </td></tr>";
                                             }
                                           } else {
-                                            echo "<tr>0 results</tr>";
+                                            echo "<tr>0 tasks founded</tr>";
                                           }
                                         ?>
                                     </tbody>
@@ -300,21 +302,28 @@ $result = $conn->query($sql);
             }
         });
         $('.view-btn').click(function(){
-            var row = $(this).closest('tr');
-            var taskName = row.find('td:eq(1)').text();
-            var taskStarted = row.find('td:eq(3)').text(); 
-            var taskDeadline = row.find('td:eq(4)').text();
-            var taskDescription = row.find('td:eq(5)').text();
-            var taskGroup = row.find('td:eq(6)').text();
-            $('#popup-view').modal('show');
-            $('#taskNameview').val(taskName);
-            $('#taskStartedview').val(taskStarted);
-            $('#taskDeadlineview').val(taskDeadline);
-            $('#taskDescriptionview').val(taskDescription);
-            $('#teachergroupsview').val(taskGroup);
-        
-
-            
+            var taskId = $(this).data('task-id'); 
+            var btn = $(this);
+            console.log(taskId)
+            $.ajax({
+                url: 'fetch_task_description.php',
+                type: 'POST',
+                data: { id: taskId },
+                success: function(response) {
+                    var taskDescription = response;
+                    var row = btn.closest('tr');
+                    var taskName = row.find('td:eq(1)').text();
+                    var taskStarted = row.find('td:eq(3)').text(); 
+                    var taskDeadline = row.find('td:eq(4)').text();
+                    var taskGroup = row.find('td:eq(6)').text();
+                    $('#popup-view').modal('show');
+                    $('#taskNameview').val(taskName);
+                    $('#taskStartedview').val(taskStarted);
+                    $('#taskDeadlineview').val(taskDeadline);
+                    $('#taskDescriptionview').val(taskDescription);
+                    $('#teachergroupsview').val(taskGroup);
+                }
+            });
         });
 
         $('#add-btn').click(function() {

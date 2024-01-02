@@ -1,8 +1,12 @@
 
 <?php 
-session_start();
-
 include 'config.php';
+session_start();
+if (!$_SESSION['studentlogged'] && !$_SESSION['adminlogged'] ) {
+    header('Location: index.php');
+    exit;
+}
+
 
 $email=$_SESSION['email'];
 if ($_SESSION['role'] == 'superadmin'){
@@ -59,105 +63,105 @@ if ($stmt->execute()){
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
             <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                        </form>
-                        <ul class="navbar-nav flex-nowrap ms-auto">
-                            <li class="nav-item "  >
-                                <a class="nav-link" id="darkbtn" href="#"><i class="fas fa-moon" id="moon"></i> <i id="sun" class="fas fa-sun" hidden></i></a>
-                            </li>
-                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                    <form class="me-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                    </form>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item "  >
+                            <a class="nav-link" id="darkbtn" href="#"><i class="fas fa-moon" id="moon"></i> <i id="sun" class="fas fa-sun" hidden></i></a>
+                        </li>
+                        <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="me-auto navbar-search w-100">
+                                    <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                        <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
                                         </div>
-                                    </form>
+                                        <div><span class="small text-gray-500">December 12, 2019</span>
+                                            <p>A new monthly report is ready to download!</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
+                                        </div>
+                                        <div><span class="small text-gray-500">December 7, 2019</span>
+                                            <p>$290.29 has been deposited into your account!</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="me-3">
+                                            <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                                        </div>
+                                        <div><span class="small text-gray-500">December 2, 2019</span>
+                                            <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                                        </div>
+                                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                                 </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 12, 2019</span>
-                                                <p>A new monthly report is ready to download!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 7, 2019</span>
-                                                <p>$290.29 has been deposited into your account!</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="me-3">
-                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                            </div>
-                                            <div><span class="small text-gray-500">December 2, 2019</span>
-                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+                                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
+                                            <div class="bg-success status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
+                                            <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
+                                            <div class="status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
+                                            <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
+                                            <div class="bg-warning status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
+                                            <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
+                                        </div>
+                                    </a><a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
+                                            <div class="bg-success status-indicator"></div>
+                                        </div>
+                                        <div class="fw-bold">
+                                            <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
+                                            <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
+                                        </div>
+                                    </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                                 </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                        <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar4.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                                <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar2.jpeg">
-                                                <div class="status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                                <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar3.jpeg">
-                                                <div class="bg-warning status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                                <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                            </div>
-                                        </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
-                                                <div class="bg-success status-indicator"></div>
-                                            </div>
-                                            <div class="fw-bold">
-                                                <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                                <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                            </div>
-                                        </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                    </div>
+                            </div>
+                            <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
+                        </li>
+                        <div class="d-none d-sm-block topbar-divider"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small"><?php echo $username; ?></span><img id="header_image" class=" border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Profile</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>Settings</a>
+                                    <a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>Activity log</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                                 </div>
-                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                            </li>
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small"><?php echo $username; ?></span><img id="header_image" class=" border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>Profile</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>Settings</a>
-                                        <a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>Activity log</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
                 <div  class="container-fluid main " >
                     <div class="d-sm-flex justify-content-between align-items-center mb-2">     
                         <h3 class="text-dark mb-4 fw-bold">Student tasks</h3>
@@ -168,7 +172,7 @@ if ($stmt->execute()){
                             <div class="col-auto float-start pt-2">
                                 <p class="text-primary fw-bold">Student tasks info</p>
                             </div>
-                            <div class="btn-group float-end" role="group">
+                            <div hidden class="btn-group float-end" role="group">
                                 <button id="add-btn" type="button" class="btn btn-primary"  >Add</button>
                                 <button id="edit-btn" type="button"class="btn btn-primary"  >Edit</button>
                                 <button id="delete-btn" type="button"class="btn btn-primary" >Delete</button>
@@ -211,13 +215,13 @@ if ($stmt->execute()){
                                             }
                                         }
                                         else{
-                                            echo" no task ";
+                                            echo" no homework ";
                                         }
                                     ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td class="col"  ><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
+                                            <td class="col"><input id="check-all" class="form-check-input" type="checkbox" /> Check All</td>
                                             <td><strong>task name</strong></td>
                                             <td><strong>teacher task</strong></td>
                                             <td><strong>task started</strong></td>
@@ -287,7 +291,7 @@ if ($stmt->execute()){
     </div>
 
     <div id="popup" >
-        <div id="popupadd">
+        <!-- <div id="popupadd">
             <div class="modal fade" id="popup-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -372,15 +376,15 @@ if ($stmt->execute()){
                                         <label for="teachergroupsEdit" class="form-label" >Groups</label>
                                         <select id="teachergroupsEdit" name="group_ids[]" class="form-control" multiple >
                                             <?php
-                                                $sql3 = "SELECT * FROM groupes";
-                                                $result3 = $conn->query($sql3);
-                                                if ($result3->num_rows > 0) {
-                                                    while($row3 = $result3->fetch_assoc()) {
-                                                        echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
-                                                    }
-                                                } else {
-                                                    echo "<option value='0'>0 results</option>";
-                                                }
+                                                // $sql3 = "SELECT * FROM groupes";
+                                                // $result3 = $conn->query($sql3);
+                                                // if ($result3->num_rows > 0) {
+                                                //     while($row3 = $result3->fetch_assoc()) {
+                                                //         echo '<option value="'.$row3["id"].'">'.$row3["name"].'</option>';
+                                                //     }
+                                                // } else {
+                                                //     echo "<option value='0'>0 results</option>";
+                                                // }
                                             ?>*
                                         </select>
                                 </div>
@@ -392,7 +396,7 @@ if ($stmt->execute()){
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div id="popupdelete" >
             <div class="modal fade" id="staticBackdrop"  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog ">
@@ -413,70 +417,65 @@ if ($stmt->execute()){
             </div>
         </div>
         <div id="popupview">
-            <!-- <div class="modal fade bd-example-modal-lg" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Task</h5>
-                                <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
-                            </div>
+            <div class="modal fade bd-example-modal-lg" id="popup-view" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form id="workform" method="POST" action="workstudent.php">
                             <div class="modal-body">
-                                <div class="table-responsive table mt-2"  role="grid" >
-                                    <table class="table my-0 table-striped" id="tabletasks">
-                                        <thead>
-                                            <tr></tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>    
+                                <input type="hidden" id="taskId" name="taskId">
+                                <div class="mb-3">
+                                    <label for="taskNameView" class="form-label">Task Name</label>
+                                    <input type="text" class="form-control" id="taskNameView" name="taskNameView" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacherTaskView" class="form-label">Teacher Task</label>
+                                    <input type="text" class="form-control" id="teacherTaskView" name="teacherTaskView" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taskDeadlineView" class="form-label">Task Deadline</label>
+                                    <input type="date" class="form-control" id="taskDeadlineView" name="taskDeadlineView" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taskStatusView" class="form-label">Task Status</label>
+                                    <select class="form-control" id="taskStatusView" name="taskStatusView">
+                                        <option selected value="pending" >Pending</option>
+                                        <option value="finished">Finished</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taskWorkView" class="form-label">Your Work</label>
+                                    <textarea class="form-control" id="taskWorkView" name="taskWorkView"></textarea>
+                                </div>
                             </div>
                             <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" value="Submit">Save changes</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
+                        </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div> 
-
+    </div>
 </body>
 
     <script>
-        function onview(id) {
-            var buttom = $('[id="' + id + '"]');
-            var groupId = buttom.data('groupId');
-            $('.main').toggleClass('d-none');
-            console.log('button:',buttom,'groupId:', groupId, 'task id:', id);
-            $.ajax({
-                url: 'fetchstudents.php',
-                type: 'POST',
-                data: {
-                    groupId: groupId,
-                    task: id
-                },
-                dataType: 'json',
-                success: function(students) {
-                    console.log('Success response:', students); 
-                    $('#studentTable tbody').empty();
-                    students.forEach(function(student) {
-                        var row = '<tr>' +
-                            '<td>' + student.firstname+' '+student.lastname+ '</td>' +
-                            '<td>' + student.work + '</td>' +
-                            '<td>' + student.task_status + '</td>' +
-                            '<td>' + student.group_id + '</td>' +
-                            '</tr>';
+        $('.view-btn').click(function() {
+            var row = $(this).closest('tr');
+            var taskId = $(this).attr('id');
+            var taskName = row.find('td:eq(1)').text();
+            var teacherTask = row.find('td:eq(2)').text();
+            var taskDeadline = row.find('td:eq(4)').text();
+            var taskStatus = row.find('td:eq(6)').text();
 
-                        $('#studentTable tbody').append(row);
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown); 
-                }
-            });
-        }
-
-        $('.return').click(function() {
-            $('.main').toggleClass('d-none');
+            $('#taskNameView').val(taskName);
+            $('#teacherTaskView').val(teacherTask);
+            $('#taskDeadlineView').val(taskDeadline);
+            $('#popup-view').modal('show');
         });
 
 

@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		 $_SESSION['role']=$role;
         if (($role == 'superadmin')&& ($password=='admin123')) {
             $_SESSION['adminlogged']= true;
+			$_SESSION['studentlogged']= false;
+			$_SESSION['teacherlogged']= false;
 			$_SESSION['email']=$email;
 			$_SESSION['id']=18;
             header('Location: dashboard_admin.php');
@@ -23,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hashed_password)) {
              if ($role == 'teacher') {
 				$_SESSION['teacherlogged']= true;
+				$_SESSION['studentlogged']= false;
+				$_SESSION['adminlogged']= false;
 				$_SESSION['email']=$email;
 				$sql2="SELECT id FROM teachers WHERE email = ?";
 				$stmt2 = $conn->prepare($sql2);
@@ -37,6 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             } else {
                 $_SESSION['studentlogged']= true;
+				$_SESSION['adminlogged']= false;
+				$_SESSION['teacherlogged']= false;
 				$_SESSION['email']=$email;
 				$sql2="SELECT id FROM students WHERE email = ?";
 				$stmt2 = $conn->prepare($sql2);
