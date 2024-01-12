@@ -26,14 +26,13 @@ $password = password_hash($password, PASSWORD_DEFAULT);
 $sql2 = "INSERT INTO accounts ( email , password, role ,matricule ) VALUES ('$email', '$password','student','$mat')";
 
 if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE )){
- // Get the ID of the newly created student
- $new_student_id = $conn->insert_id;
 
- // Fetch tasks assigned to the student's group
+ $new_student_id = "SELECT id from students where matricule ='$mat' ";
+ 
  $sql3 = "SELECT * FROM tasks WHERE group_id = '$group_id'";
  $result3 = $conn->query($sql3);
 
- // Assign each task to the new student
+ 
  while($row3 = $result3->fetch_assoc()) {
      $task_id = $row3['id_tasks'];
      $sql4 = "INSERT INTO student_tasks (student_id, task_id) VALUES ('$new_student_id', '$task_id')";
@@ -41,7 +40,7 @@ if(($conn->query($sql1)===TRUE )&&($conn->query($sql2)===TRUE )){
  }
 
  header('Location: students.php');
- die();
+  die();
 } else{
  echo "Error: " . $sql1 . "<br>" . $conn->error;echo "Error: " . $sql2 . "<br>" . $conn->error;
 }
